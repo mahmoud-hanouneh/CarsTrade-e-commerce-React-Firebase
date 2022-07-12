@@ -7,8 +7,8 @@ import { useNavigate } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid'
 import Spinner from '../components/Spinner'
 import RadioInput from '../components/RadioInput'
-
 import {
+  Button,
   FormControl,
   FormLabel,
   Switch,
@@ -64,17 +64,14 @@ const CreateListing = () => {
     mileage: '',
     price: '',
     discountedPrice: '',
-    status: '',
     notes: '',
     images: {},
     options: 
       {
-        leatherSeats: true,
+        leatherSeats: false,
         airBags: false,
         bluetooth: false,
         fogLights: false,
-        chromeRim: false,
-        keylessEntry: false
       }
     ,
     userRef: ''
@@ -197,7 +194,7 @@ const CreateListing = () => {
       const docRef = await addDoc(collection(db, 'cars'), formDataCopy)
       console.log('success')
       setLoading(false)
-      navigate(`/category/${formDataCopy.type}/${docRef.id}`)
+      // navigate(`/category/${formDataCopy.type}/${docRef.id}`)
 
     } catch (error) {
       console.log(error.code)
@@ -212,225 +209,284 @@ const CreateListing = () => {
   }
   return (
    <>
-    <div className="container p-4">
-      <Heading className='my-2'>Add your car ad</Heading>
-      <FormControl>
-        <FormLabel htmlFor='manufacturer'>Manufacturer</FormLabel>
-        <Select 
-          id='manufacturer' 
-          placeholder='Select country'
-          onChange={changeHandler}
-          value={formData.manufacturer}
-        >
-        {carsData.map((car) => (
-          <option key={car.id} value={car.brand}>{car.brand}</option>
-        ))}
-      </Select>
-      
-      </FormControl>
-
-      <FormControl>
-        <FormLabel htmlFor='color'>Color</FormLabel>
-        <Select 
-          id='color' 
-          placeholder='Select color'
-          onChange={changeHandler}
-          value={formData.color}
-        >
-        {colorsData.map((color) => (
-          <option key={color.id} value={color.color}>{color.color}</option>
-        ))}
-      </Select>
-      
-      </FormControl> 
-
-      <FormControl>
-        <RadioGroup id='type' onChange={(value => {setFormData(prev => ({
-          ...prev,
-          type: value
-        }))})} value={formData.type}>
-          <Stack spacing={5} direction='row'>
-            <Radio colorScheme='teal' value='sale'>Sale</Radio>
-            <Radio colorScheme='teal' value='rent'>Rent</Radio>
-            <Radio colorScheme='teal' value='lease'>Lease</Radio>
-          </Stack>
-        </RadioGroup> 
-      </FormControl>
-          
-      <FormControl>
-        <FormLabel htmlFor='modelYear'>Year</FormLabel>
-          <NumberInput 
-            max={2022} 
-            min={1920} 
-            onChange={(valueString) => setFormData(prev => ({
-              ...prev,
-              modelYear: valueString
-            }))} 
-            value={formData.modelYear}
+   <form onSubmit={submitHandler}>
+    <div className="container w-9/12 mx-auto p-4">
+        <Heading className='my-2'>Add your car ad</Heading>
+        <FormControl className='mb-3'>
+          <FormLabel htmlFor='manufacturer'>Manufacturer</FormLabel>
+          <Select 
+            id='manufacturer' 
+            placeholder='Select country'
+            onChange={changeHandler}
+            value={formData.manufacturer}
           >
-            <NumberInputField id='modelYear' />
-            <NumberInputStepper>
-              <NumberIncrementStepper />
-              <NumberDecrementStepper />
-            </NumberInputStepper>
-          </NumberInput>
-      </FormControl>
-      
-      <FormControl>
-        <FormLabel htmlFor='mileage'>Mileage</FormLabel>
+          {carsData.map((car) => (
+            <option key={car.id} value={car.brand}>{car.brand}</option>
+          ))}
+        </Select>
+        
+        </FormControl>
+
+        <FormControl className='mb-3'>
+          <FormLabel htmlFor='color'>Color</FormLabel>
+          <Select 
+            id='color' 
+            placeholder='Select color'
+            onChange={changeHandler}
+            value={formData.color}
+          >
+          {colorsData.map((color) => (
+            <option key={color.id} value={color.color}>{color.color}</option>
+          ))}
+        </Select>
+        
+        </FormControl> 
+
+        <FormControl className='mb-3'>
+          <RadioGroup id='type' onChange={(value => {setFormData(prev => ({
+            ...prev,
+            type: value
+          }))})} value={formData.type}>
+            <Stack spacing={5} direction='row'>
+              <Radio colorScheme='teal' value='sale'>Sale</Radio>
+              <Radio colorScheme='teal' value='rent'>Rent</Radio>
+              <Radio colorScheme='teal' value='lease'>Lease</Radio>
+            </Stack>
+          </RadioGroup> 
+        </FormControl>
+
+        <FormControl className='mb-3'>
+          <FormLabel htmlFor='modelYear'>Year</FormLabel>
+            <NumberInput 
+              max={2022} 
+              min={1920} 
+              onChange={(valueString) => setFormData(prev => ({
+                ...prev,
+                modelYear: valueString
+              }))} 
+              value={formData.modelYear}
+            >
+              <NumberInputField id='modelYear' />
+              <NumberInputStepper>
+                <NumberIncrementStepper />
+                <NumberDecrementStepper />
+              </NumberInputStepper>
+            </NumberInput>
+        </FormControl>
+        
+        <FormControl className='mb-3'>
+          <FormLabel htmlFor='mileage'>Mileage</FormLabel>
+            <NumberInput
+              min={0} 
+              onChange={(valueString) => setFormData(prev => ({
+                ...prev,
+                mileage: valueString
+              }))} 
+              value={formData.mileage}
+            >
+              <NumberInputField id='mileage' />
+              <NumberInputStepper>
+                <NumberIncrementStepper />
+                <NumberDecrementStepper />
+              </NumberInputStepper>
+            </NumberInput>
+        </FormControl>
+
+        <FormControl className='mb-3'>
+          <HStack onChange={(value) => setFormData(prev => ({
+            ...prev,
+            transmission: value.target.defaultValue
+          }))} 
+          {...group}>
+          {options.map((value) => {
+            const radio = getRadioProps({ value })
+            return (
+              <RadioInput key={value} {...radio}>
+                {value}
+              </RadioInput>
+            )
+          })}
+          </HStack>
+        </FormControl>
+
+        <FormControl className='mb-3'>
+          <FormLabel htmlFor='price' mb='0'>
+            Price
+          </FormLabel>
           <NumberInput
-            min={0} 
-            onChange={(valueString) => setFormData(prev => ({
-              ...prev,
-              mileage: valueString
-            }))} 
-            value={formData.mileage}
-          >
-            <NumberInputField id='mileage' />
-            <NumberInputStepper>
-              <NumberIncrementStepper />
-              <NumberDecrementStepper />
-            </NumberInputStepper>
-          </NumberInput>
-      </FormControl>
-      <FormControl className='my-3'>
-        <HStack onChange={(value) => setFormData(prev => ({
-          ...prev,
-          transmission: value.target.defaultValue
-        }))} 
-        {...group}>
-        {options.map((value) => {
-          const radio = getRadioProps({ value })
-          return (
-            <RadioInput key={value} {...radio}>
-              {value}
-            </RadioInput>
-          )
-        })}
-        </HStack>
-      </FormControl>
-      <FormControl>
-        <FormLabel htmlFor='price' mb='0'>
-          Price
-        </FormLabel>
-        <NumberInput
-            min={0} 
-            onChange={(value) => setFormData(prev => ({
-              ...prev,
-              price: parse(value)
-            }))} 
-            value={format(formData.price)}
-          >
-            <NumberInputField id='price' />
-            <NumberInputStepper>
-              <NumberIncrementStepper />
-              <NumberDecrementStepper />
-            </NumberInputStepper>
-          </NumberInput>
-      </FormControl>
+              min={0} 
+              onChange={(value) => setFormData(prev => ({
+                ...prev,
+                price: parse(value)
+              }))} 
+              value={format(formData.price)}
+            >
+              <NumberInputField id='price' />
+              <NumberInputStepper>
+                <NumberIncrementStepper />
+                <NumberDecrementStepper />
+              </NumberInputStepper>
+            </NumberInput>
+        </FormControl>
 
-      <FormControl className='mt-2' display='flex' alignItems='center'>
-        <FormLabel htmlFor='offer' mb='0'>
-          Offer
-        </FormLabel>
-        <Switch colorScheme='teal' id='offer' size='lg' isChecked={formData.offer} 
-          onChange = {() => setFormData(prev => ({
-            ...prev,
-            offer: !prev.offer
-          }))}        
-        />
-      </FormControl>
-
-      <FormControl>
-        <FormLabel htmlFor='discountedPrice' mb='0'>
-          Discount
-        </FormLabel>
-        <NumberInput
-            isDisabled={!formData.offer}
-            min={0}
-            max={formData.price} 
-            onChange={(value) => setFormData(prev => ({
+        <FormControl className='mb-3' display='flex' alignItems='center'>
+          <FormLabel htmlFor='offer' mb='0'>
+            Offer
+          </FormLabel>
+          <Switch colorScheme='teal' id='offer' size='lg' isChecked={formData.offer} 
+            onChange = {() => setFormData(prev => ({
               ...prev,
-              discountedPrice: parse(value)
-            }))} 
-            value={format(formData.discountedPrice)}
+              offer: !prev.offer
+            }))}        
+          />
+        </FormControl>
+
+        <FormControl className='mb-3'>
+          <FormLabel htmlFor='discountedPrice' mb='0'>
+            Discount
+          </FormLabel>
+          <NumberInput
+              isDisabled={!formData.offer}
+              min={0}
+              max={formData.price} 
+              onChange={(value) => setFormData(prev => ({
+                ...prev,
+                discountedPrice: parse(value)
+              }))} 
+              value={format(formData.discountedPrice)}
+            >
+              <NumberInputField id='discountedPrice' />
+              <NumberInputStepper>
+                <NumberIncrementStepper />
+                <NumberDecrementStepper />
+              </NumberInputStepper>
+            </NumberInput>
+        </FormControl>
+              
+        <FormControl className='mb-3'>
+          <FormLabel htmlFor='city'>City</FormLabel>
+          <Select 
+            id='city' 
+            placeholder='Select country'
+            onChange={changeHandler}
+            value={formData.city}
           >
-            <NumberInputField id='discountedPrice' />
-            <NumberInputStepper>
-              <NumberIncrementStepper />
-              <NumberDecrementStepper />
-            </NumberInputStepper>
-          </NumberInput>
-      </FormControl>
-            
-      <FormControl>
-        <FormLabel htmlFor='city'>City</FormLabel>
-        <Select 
-          id='city' 
-          placeholder='Select country'
-          onChange={changeHandler}
-          value={formData.city}
-        >
-        {cities.map((city) => (
-          <option key={city.id} value={city.city}>{city.city}</option>
-        ))}
-      </Select>
-      
-      </FormControl>      
-      
-      <FormControl>
-        <FormLabel htmlFor='location'>Location (ex. neighborhood)</FormLabel>
-        <Input 
-          value={formData.location} 
-          onChange={changeHandler} 
-          id='location' 
-          type='text' 
-        />
-      </FormControl> 
-      
-      <FormControl>
-        <FormLabel htmlFor='notes'>Notes</FormLabel>
-        <Textarea
-          id='notes'
-          value={formData.notes}
-          onChange={changeHandler}
-          placeholder='Notes'
-          size='sm'
-        />
-      </FormControl>
-      <Stack spacing={5} direction='row'>
-        <Checkbox 
-          value='leatherSeats' 
-          id='leatherSeats' 
-          size='lg' 
-          colorScheme='teal' 
-          isChecked={formData.options.leatherSeats} 
-          onChange={() => setFormData(prev => ({
-            ...prev,
-            options: {
-              ...prev.options,
-              leatherSeats: !prev.options.leatherSeats
-            }
-        }))}>
-          Leather Seats
-        </Checkbox>
-        <Checkbox 
-          value='airBags' 
-          id='airBags' 
-          size='lg' 
-          colorScheme='teal' 
-          isChecked={formData.options.airBags} 
-          onChange={() => setFormData(prev => ({
-            ...prev,
-            options: {
-              ...prev.options,
-              airBags: !prev.options.airBags
-            }
-        }))}>
-          Air Bags
-        </Checkbox>
-      </Stack>
+          {cities.map((city) => (
+            <option key={city.id} value={city.city}>{city.city}</option>
+          ))}
+        </Select>
+        
+        </FormControl>      
+        
+        <FormControl className='mb-3'>
+          <FormLabel htmlFor='location'>Location (ex. neighborhood)</FormLabel>
+          <Input 
+            value={formData.location} 
+            onChange={changeHandler} 
+            id='location' 
+            type='text' 
+          />
+        </FormControl> 
+        
+        <FormControl className='mb-3'>
+          <FormLabel htmlFor='notes'>Notes</FormLabel>
+          <Textarea
+            id='notes'
+            value={formData.notes}
+            onChange={changeHandler}
+            placeholder='Notes'
+            size='sm'
+          />
+        </FormControl>
+
+        <FormControl className='mb-3'>
+          <FormLabel htmlFor='options'>Options</FormLabel>
+          <Stack id='options' spacing={5} direction='row'>
+            <Checkbox 
+              value='leatherSeats' 
+              size='lg' 
+              colorScheme='teal' 
+              isChecked={formData.options.leatherSeats} 
+              onChange={() => setFormData(prev => ({
+                ...prev,
+                options: {
+                  ...prev.options,
+                  leatherSeats: !prev.options.leatherSeats
+                }
+            }))}>
+              Leather Seats
+            </Checkbox>
+            <Checkbox 
+              value='airBags' 
+              size='lg' 
+              colorScheme='teal' 
+              isChecked={formData.options.airBags} 
+              onChange={() => setFormData(prev => ({
+                ...prev,
+                options: {
+                  ...prev.options,
+                  airBags: !prev.options.airBags
+                }
+            }))}>
+              Air Bags
+            </Checkbox>
+
+            <Checkbox 
+              value='bluetooth' 
+              size='lg' 
+              colorScheme='teal' 
+              isChecked={formData.options.bluetooth} 
+              onChange={() => setFormData(prev => ({
+                ...prev,
+                options: {
+                  ...prev.options,
+                  bluetooth: !prev.options.bluetooth
+                }
+            }))}>
+            Bluetooth
+            </Checkbox>
+
+            <Checkbox 
+              value='fogLights' 
+              size='lg' 
+              colorScheme='teal' 
+              isChecked={formData.options.fogLights} 
+              onChange={() => setFormData(prev => ({
+                ...prev,
+                options: {
+                  ...prev.options,
+                  fogLights: !prev.options.fogLights
+                }
+            }))}>
+            Fog Lights
+            </Checkbox>
+        </Stack>
+        </FormControl>
+
+        <FormControl className='mb-3'>
+          <FormLabel className='formLabel'>Car Images</FormLabel>
+              <p className='imagesInfo'>
+                The first image will be the cover (max 6).
+              </p>
+              <input
+                className='formInputFile my-2'
+                type='file'
+                id='images'
+                max='6'
+                onChange={changeHandler}
+                accept='.jpg,.png,.jpeg'
+                multiple
+                required
+              />
+        </FormControl>
+        
+        <Button variant='outline' type='submit' colorScheme='teal' size='lg'>
+            Submit
+        </Button>
+          
     </div>
+   </form>
+
    </>
   )
 }
