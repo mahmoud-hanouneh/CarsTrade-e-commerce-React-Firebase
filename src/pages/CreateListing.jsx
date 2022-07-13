@@ -8,7 +8,11 @@ import { v4 as uuidv4 } from 'uuid'
 import LoadingContext from '../contexts/loading/loadingContext'
 
 import Spinner from '../components/feedback/Spinner'
+
 import RadioInput from '../components/form/RadioInput'
+import SelectInput from '../components/form/SelectInput'
+import NumberInputComponent from '../components/form/NumberInputComponent';
+
 import {
   Button,
   FormControl,
@@ -17,7 +21,6 @@ import {
   Input,
   NumberInput,
   Textarea,
-  Text,
   NumberInputField,
   NumberInputStepper,
   NumberIncrementStepper,
@@ -27,9 +30,7 @@ import {
   Radio,
   RadioGroup,
   useRadioGroup,
-  CheckboxGroup,
   Checkbox,
-  useCheckboxGroup,
   Stack,
   HStack,
   useToast
@@ -40,21 +41,6 @@ import { cities } from '../citiesData';
 import { colorsData } from '../colorsData'
 
 const CreateListing = () => {
-  const options = ['Manual', 'Automatic']
-  const { getRootProps, getRadioProps} = useRadioGroup({
-    name: 'framework',
-    defaultValue: 'Automatic'
-  })
-
-  const group = getRootProps()
-  
-  const { buttonLoading, dispatch } = useContext(LoadingContext)
-  const toast = useToast()
-  const isMounted = useRef(true)
-  const auth = getAuth()
-  const navigate = useNavigate()
-
-  const [loading, setLoading] = useState(true) 
 
   const [formData, setFormData] = useState({
     type: 'sale',
@@ -81,6 +67,22 @@ const CreateListing = () => {
     ,
     userRef: ''
   })
+  const { buttonLoading, spinnerLoading, dispatch } = useContext(LoadingContext)
+  
+  const options = ['Manual', 'Automatic']
+  const { getRootProps, getRadioProps} = useRadioGroup({
+    name: 'framework',
+    defaultValue: 'Automatic'
+  })
+  const group = getRootProps()
+  
+  
+  const toast = useToast()
+  const isMounted = useRef(true)
+  const auth = getAuth()
+  const navigate = useNavigate()
+
+  
   const format = (val) => `$` + val
   const parse = (val) => val.replace(/^\$/, '')
   // set userRef value when the component is mounted
@@ -93,7 +95,8 @@ const CreateListing = () => {
                         userRef: user.uid
                     })
                 )
-                setLoading(false)
+                dispatch({ type: 'STOP_SPINNER_LOADING' })
+
             } else {
                 navigate('/sign-in')
             }
@@ -226,7 +229,7 @@ const CreateListing = () => {
   
  
 
-  if (loading) {
+  if (spinnerLoading) {
       return <Spinner />
   }
   return (
@@ -234,35 +237,24 @@ const CreateListing = () => {
    <form onSubmit={submitHandler}>
     <div className="container w-9/12 mx-auto p-4">
         <Heading className='my-2'>Add your car ad</Heading>
-        <FormControl className='mb-3'>
-          <FormLabel htmlFor='manufacturer'>Manufacturer</FormLabel>
-          <Select 
-            id='manufacturer' 
-            placeholder='Select country'
-            onChange={changeHandler}
-            value={formData.manufacturer}
-          >
-          {carsData.map((car) => (
-            <option key={car.id} value={car.brand}>{car.brand}</option>
-          ))}
-        </Select>
-        
-        </FormControl>
 
-        <FormControl className='mb-3'>
-          <FormLabel htmlFor='color'>Color</FormLabel>
-          <Select 
-            id='color' 
-            placeholder='Select color'
-            onChange={changeHandler}
-            value={formData.color}
-          >
-          {colorsData.map((color) => (
-            <option key={color.id} value={color.color}>{color.color}</option>
-          ))}
-        </Select>
-        
-        </FormControl> 
+        <SelectInput
+          name='Manufacturer'
+          id='manufacturer'
+          value={formData.manufacturer}
+          handler={changeHandler}
+          selectData={carsData}
+          dataKey='manufacturer'
+        />
+
+        <SelectInput
+          name='Color'
+          id='color'
+          value={formData.color}
+          handler={changeHandler}
+          selectData={colorsData}
+          dataKey='color'
+        />  
 
         <FormControl className='mb-3'>
           <RadioGroup id='type' onChange={(value => {setFormData(prev => ({
@@ -384,21 +376,15 @@ const CreateListing = () => {
               </NumberInputStepper>
             </NumberInput>
         </FormControl>
-              
-        <FormControl className='mb-3'>
-          <FormLabel htmlFor='city'>City</FormLabel>
-          <Select 
-            id='city' 
-            placeholder='Select country'
-            onChange={changeHandler}
-            value={formData.city}
-          >
-          {cities.map((city) => (
-            <option key={city.id} value={city.city}>{city.city}</option>
-          ))}
-        </Select>
-        
-        </FormControl>      
+
+        <SelectInput
+          name='City'
+          id='city'
+          value={formData.city}
+          handler={changeHandler}
+          selectData={cities}
+          dataKey='city'
+        />
         
         <FormControl className='mb-3'>
           <FormLabel htmlFor='location'>Location (ex. neighborhood)</FormLabel>

@@ -1,12 +1,11 @@
-import { useRef, useEffect, useState } from 'react'
+import { useRef, useEffect, useState, useContext } from 'react'
 import { onAuthStateChanged, getAuth } from 'firebase/auth'
-
 
 const useAuthentication = () => {
   const mounted = useRef(true)
   const [isLogged, setIsLogged] = useState(false)
   const [checkingStatus, setCheckingStatus] = useState(true)
-  
+
   useEffect(() => {
 
     if(mounted) {

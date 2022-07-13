@@ -5,7 +5,8 @@ const LoadingContext = createContext()
 
 export const LoadingProvider = ( { children } ) => {
     const initialState = {
-        buttonLoading: false
+        buttonLoading: false,
+        spinnerLoading: true
     }
 
     const [state, dispatch] = useReducer(loadingReducer, initialState)

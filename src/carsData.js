@@ -1,31 +1,31 @@
 export const carsData = [
     {
         id: '1',
-        brand: 'Honda',
+        manufacturer: 'Honda',
     },
     {
         id: '2',
-        brand: 'Toyota',
+        manufacturer: 'Toyota',
     },
     {
         id: '3',
-        brand: 'Hyndai',
+        manufacturer: 'Hyndai',
     },
     {
         id: '4',
-        brand: 'BMW',
+        manufacturer: 'BMW',
     },
     {
         id: '5',
-        brand: 'Audi',
+        manufacturer: 'Audi',
     },
     {
         id: '6',
-        brand: 'Porche',
+        manufacturer: 'Porche',
     },
     {
         id: '7',
-        brand: 'Range Rover',
+        manufacturer: 'Range Rover',
     }
 ]
     

@@ -10,6 +10,16 @@ const loadingReducer = (state, action) => {
                 ...state,
                 buttonLoading: false
             }
+        case 'START_SPINNER_LOADING':
+            return {
+                ...state,
+                spinnerLoading: true
+            }
+        case 'STOP_SPINNER_LOADING':
+            return {
+                ...state,
+                spinnerLoading: false
+            }
         default:
             return state
     }
