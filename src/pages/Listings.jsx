@@ -3,7 +3,7 @@ import ListingItem from '../components/ListingItem'
 import { useParams } from 'react-router-dom'
 import { db } from '../firebase.config'
 import { collection, getDocs, where, query } from 'firebase/firestore'
-import Spinner from '../components/Spinner'
+import Spinner from '../components/feedback/Spinner'
 
 const Listings = () => {
   const [loading, setLoading] = useState(true)

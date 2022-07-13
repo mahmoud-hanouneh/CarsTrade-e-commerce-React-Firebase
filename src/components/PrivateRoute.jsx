@@ -1,5 +1,5 @@
 import React from 'react'
-import Spinner from './Spinner'
+import Spinner from './feedback/Spinner'
 
 import useAuthentication from '../hooks/useAuthentication'
 import { Outlet, Navigate } from 'react-router-dom'

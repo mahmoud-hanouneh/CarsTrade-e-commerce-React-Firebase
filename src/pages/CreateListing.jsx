@@ -1,12 +1,14 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useContext } from 'react'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
 import { db } from '../firebase.config';
 import { useNavigate } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid'
-import Spinner from '../components/Spinner'
-import RadioInput from '../components/RadioInput'
+import LoadingContext from '../contexts/loading/loadingContext'
+
+import Spinner from '../components/feedback/Spinner'
+import RadioInput from '../components/form/RadioInput'
 import {
   Button,
   FormControl,
@@ -29,7 +31,8 @@ import {
   Checkbox,
   useCheckboxGroup,
   Stack,
-  HStack
+  HStack,
+  useToast
 } from '@chakra-ui/react'
 
 import { carsData } from '../carsData';
@@ -45,6 +48,8 @@ const CreateListing = () => {
 
   const group = getRootProps()
   
+  const { buttonLoading, dispatch } = useContext(LoadingContext)
+  const toast = useToast()
   const isMounted = useRef(true)
   const auth = getAuth()
   const navigate = useNavigate()
@@ -120,6 +125,7 @@ const CreateListing = () => {
   const submitHandler = async (e) => {
     
     e.preventDefault()
+    dispatch({ type: 'START_LOADING' })
     try {
       const storeImage = async (img) => {
 
@@ -179,7 +185,6 @@ const CreateListing = () => {
       const carImages = await Promise.all(
           [...formData.images].map(img => storeImage(img))
       ).catch((error) => {
-          setLoading(false)
           alert(error)
           return
       })
@@ -192,12 +197,29 @@ const CreateListing = () => {
       delete formDataCopy.images
 
       const docRef = await addDoc(collection(db, 'cars'), formDataCopy)
-      console.log('success')
-      setLoading(false)
-      // navigate(`/category/${formDataCopy.type}/${docRef.id}`)
+      dispatch({ type: 'STOP_LOADING' })
+      toast({
+        title: 'Success',
+        description: "Your advertisement has been added successfully",
+        position: 'top',
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+      })
+      navigate(`/category/${formDataCopy.type}/${docRef.id}`)
 
     } catch (error) {
       console.log(error.code)
+      dispatch({ type: 'STOP_LOADING' })
+      toast({
+        title: 'Fail',
+        description: "Something went wrong!",
+        position: 'top',
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      })
+
     }
     
   }
@@ -400,7 +422,7 @@ const CreateListing = () => {
         </FormControl>
 
         <FormControl className='mb-3'>
-          <FormLabel htmlFor='options'>Options</FormLabel>
+          <FormLabel htmlFor='options'>More options</FormLabel>
           <Stack id='options' spacing={5} direction='row'>
             <Checkbox 
               value='leatherSeats' 
@@ -480,7 +502,14 @@ const CreateListing = () => {
               />
         </FormControl>
         
-        <Button variant='outline' type='submit' colorScheme='teal' size='lg'>
+        <Button 
+          variant='outline'
+          isLoading={buttonLoading}
+          loadingText='Adding ..' 
+          type='submit' 
+          colorScheme='teal' 
+          size='lg'
+        >
             Submit
         </Button>
           

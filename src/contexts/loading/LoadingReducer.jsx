@@ -3,12 +3,12 @@ const loadingReducer = (state, action) => {
         case 'START_LOADING':
             return {
                 ...state,
-                loading: true
+                buttonLoading: true
             }
         case 'STOP_LOADING':
             return {
                 ...state,
-                loading: false
+                buttonLoading: false
             }
         default:
             return state

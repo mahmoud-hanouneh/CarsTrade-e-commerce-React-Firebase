@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { getDoc, doc, collection } from 'firebase/firestore'
 import { getAuth } from 'firebase/auth'
 import { useNavigate, useParams } from 'react-router-dom'
-import Spinner from '../components/Spinner'
+import Spinner from '../components/feedback/Spinner'
 import { db } from '../firebase.config'
 
 
@@ -40,7 +40,8 @@ const ListingDetails = () => {
      {auth.currentUser.uid === carListing.userRef ? 
      <h1>Yes</h1> 
     :
-    <h1>No</h1>}
+    <h1>No</h1>
+    }
     </div>
   )
 }

@@ -29,12 +29,11 @@ const Profile = () => {
     email: auth.currentUser.email
   })
 
-  const { loading, dispatch } = useContext(LoadingContext)
+  const { buttonLoading, dispatch } = useContext(LoadingContext)
 
   const { name, email } = formData
   const submitHandler = async (e) => {
     
-    // setLoading(true)
     dispatch({ type: 'START_LOADING' })
     try {
       if (name !== auth.currentUser.displayName) {
@@ -47,7 +46,6 @@ const Profile = () => {
         })
       }
       console.log('success')
-      // toast.success('Your profile info has been edited successfully')
       toast({
         title: 'Edited successfully',
         description: "We've edited yout info",
@@ -56,7 +54,6 @@ const Profile = () => {
         duration: 3000,
         isClosable: true,
       })
-      // setLoading(false)
       dispatch({ type: 'STOP_LOADING' })
 
     } catch (error) {
@@ -69,7 +66,7 @@ const Profile = () => {
         duration: 3000,
         isClosable: true,
       })
-      setLoading(false)
+      dispatch({ type: 'STOP_LOADING' })
     }
     
   }
@@ -94,7 +91,7 @@ const Profile = () => {
         <Box>
         <Button
           variant={isEditing ? 'outline' : 'solid'}
-          isLoading = {loading}
+          isLoading = {buttonLoading}
           onClick={() => {
             isEditing && submitHandler()
             setIsEditing(prev => !prev)
