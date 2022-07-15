@@ -1,6 +1,8 @@
 import React from 'react'
 import { useRadio, Box } from '@chakra-ui/react'
-const RadioInput = (props) => {
+
+
+const FormRadio = (props) => {
   
   const { getInputProps, getCheckboxProps } = useRadio(props)
   const input = getInputProps()
@@ -34,4 +36,4 @@ const RadioInput = (props) => {
   )
 }
 
-export default RadioInput
+export default FormRadio

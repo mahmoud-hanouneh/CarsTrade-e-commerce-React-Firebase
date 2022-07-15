@@ -2,7 +2,7 @@ import React from 'react'
 import { FormControl, FormLabel, Select} from '@chakra-ui/react'
 
 
-const SelectInput = ( { name, id, handler, value, selectData, dataKey } ) => {
+const FormSelect = ( { name, id, handler, value, selectData, dataKey } ) => {
   return (
     <FormControl className='mb-3'>
           <FormLabel htmlFor='city'>{name}</FormLabel>
@@ -20,4 +20,4 @@ const SelectInput = ( { name, id, handler, value, selectData, dataKey } ) => {
   )
 }
 
-export default SelectInput
+export default FormSelect

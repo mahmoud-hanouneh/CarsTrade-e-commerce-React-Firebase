@@ -9,9 +9,9 @@ import LoadingContext from '../contexts/loading/loadingContext'
 
 import Spinner from '../components/feedback/Spinner'
 
-import RadioInput from '../components/form/RadioInput'
-import SelectInput from '../components/form/SelectInput'
-import NumberInputComponent from '../components/form/NumberInputComponent';
+import FormRadio from '../components/form/FormRadio'
+import FormSelect from '../components/form/FormSelect'
+import FormNumber from '../components/form/FormNumber';
 
 import {
   Button,
@@ -36,9 +36,9 @@ import {
   useToast
 } from '@chakra-ui/react'
 
-import { carsData } from '../carsData';
-import { cities } from '../citiesData';
-import { colorsData } from '../colorsData'
+import { carsData } from '../data/carsData';
+import { cities } from '../data/citiesData';
+import { colorsData } from '../data/colorsData'
 
 const CreateListing = () => {
 
@@ -238,7 +238,7 @@ const CreateListing = () => {
     <div className="container w-9/12 mx-auto p-4">
         <Heading className='my-2'>Add your car ad</Heading>
 
-        <SelectInput
+        <FormSelect
           name='Manufacturer'
           id='manufacturer'
           value={formData.manufacturer}
@@ -247,7 +247,7 @@ const CreateListing = () => {
           dataKey='manufacturer'
         />
 
-        <SelectInput
+        <FormSelect
           name='Color'
           id='color'
           value={formData.color}
@@ -315,9 +315,9 @@ const CreateListing = () => {
           {options.map((value) => {
             const radio = getRadioProps({ value })
             return (
-              <RadioInput key={value} {...radio}>
+              <FormRadio key={value} {...radio}>
                 {value}
-              </RadioInput>
+              </FormRadio>
             )
           })}
           </HStack>
@@ -377,7 +377,7 @@ const CreateListing = () => {
             </NumberInput>
         </FormControl>
 
-        <SelectInput
+        <FormSelect
           name='City'
           id='city'
           value={formData.city}

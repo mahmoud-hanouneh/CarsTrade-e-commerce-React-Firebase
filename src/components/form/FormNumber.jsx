@@ -9,7 +9,7 @@ import {
     NumberDecrementStepper
 } from '@chakra-ui/react'
 
-const NumberInputComponent = () => {
+const FormNumber = () => {
   return (
     <FormControl className='mb-3'>
         <FormLabel htmlFor='modelYear'>Year</FormLabel>
@@ -32,4 +32,4 @@ const NumberInputComponent = () => {
   )
 }
 
-export default NumberInputComponent
+export default FormNumber
