@@ -62,7 +62,7 @@ const CreateListing = () => {
         leatherSeats: false,
         airBags: false,
         bluetooth: false,
-        fogLights: false,
+        fogLights: false
       }
     ,
     userRef: ''

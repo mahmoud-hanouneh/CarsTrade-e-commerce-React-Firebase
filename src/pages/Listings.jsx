@@ -54,7 +54,7 @@ const Listings = () => {
                         <ListingItem 
                             id={car.id}
                             key={car.id}
-                            info={car.data}
+                            data={car.data}
                         />
                     )
                     })}
