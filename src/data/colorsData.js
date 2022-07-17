@@ -1,42 +1,42 @@
 export const colorsData = [
     {
         id: '1',
-        color: 'red'
+        color: 'Red'
     },
     {
         id: '2',
-        color: 'white'
+        color: 'White'
     },
     {
         id: '3',
-        color: 'brown'
+        color: 'Brown'
     },
     {
         id: '4',
-        color: 'black'
+        color: 'Black'
     },
     {
         id: '5',
-        color: 'blue'
+        color: 'Blue'
     },
     {
         id: '6',
-        color: 'grey'
+        color: 'Grey'
     },
     {
         id: '7',
-        color: 'dark blue'
+        color: 'Dark blue'
     },
     {
         id: '8',
-        color: 'orange'
+        color: 'Orange'
     },
     {
         id: '9',
-        color: 'green'
+        color: 'Green'
     },
     {
         id: '10',
-        color: 'other'
+        color: 'Other'
     }
 ]

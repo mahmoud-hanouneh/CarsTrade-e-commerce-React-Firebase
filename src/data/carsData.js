@@ -26,6 +26,10 @@ export const carsData = [
     {
         id: '7',
         manufacturer: 'Range Rover',
+    },
+    {
+        id: '8',
+        manufacturer: 'Kia',
     }
 ]
     

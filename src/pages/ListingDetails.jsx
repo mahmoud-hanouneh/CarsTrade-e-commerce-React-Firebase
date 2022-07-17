@@ -32,6 +32,7 @@ const ListingDetails = () => {
     fetchCarListing()
 
   }, [params.listingId, navigate])
+  
   if (loading) {
     return <Spinner />
   }
