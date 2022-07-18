@@ -3,8 +3,15 @@ import { getDoc, doc, collection } from 'firebase/firestore'
 import { getAuth } from 'firebase/auth'
 import { useNavigate, useParams } from 'react-router-dom'
 import Spinner from '../components/feedback/Spinner'
-import { db } from '../firebase.config'
+import { Image, Container, Box, Heading, Stack, Text } from '@chakra-ui/react' 
+import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react'
+import 'swiper/css'
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
 
+import { db } from '../firebase.config'
 
 const ListingDetails = () => {
 
@@ -37,13 +44,50 @@ const ListingDetails = () => {
     return <Spinner />
   }
   return (
-    <div>
-     {auth.currentUser.uid === carListing.userRef ? 
-     <h1>Yes</h1> 
-    :
-    <h1>No</h1>
-    }
-    </div>
+    <Box>
+     <Swiper
+      modules={[Navigation, Pagination, Scrollbar, A11y]} 
+      slidesPerView={1}
+      spaceBetween={50}
+      navigation
+      pagination={{ clickable: true }}
+      scrollbar={{ draggable: true }}
+      onSwiper={(swiper) => console.log(swiper)}
+     >
+          {carListing.carImages.map((url, index) => (
+            
+                <SwiperSlide key={index}>
+                    <Container key={index} maxW='2xl' centerContent>
+                          <Image src={url} objectFit='cover' />
+                    </Container>
+                </SwiperSlide>
+            
+        
+          ))}
+     </Swiper>
+     <Box className='p-2'>
+        <Heading className='mb-2' as='h2' size='xl'>
+          {carListing.manufacturer}
+        </Heading>       
+        <Stack>
+              <Text fontSize='md'>Color: {carListing.color}</Text>
+              <Text fontSize='md'>Year: {carListing.modelYear}</Text>
+              <Text fontSize='md'>Transmission: {carListing.transmission}</Text>
+              <Text fontSize='md'>Mileage: {carListing.mileage}</Text>
+              <Text fontSize='md'>
+                {carListing.type === 'sale' ? 'Price:' : 'Rent:'}
+                { ' ' } {carListing.price} $ { ' ' }
+                {carListing.type === 'rent' && '/Month'} 
+              </Text>
+              {carListing.notes !== '' && 
+                <Text fontSize='md'>
+                  Note: {carListing.notes}
+                </Text>
+              }
+        </Stack>       
+        </Box>
+        {auth.currentUser.uid !== carListing.userRef && 'Contact'}
+    </Box>
   )
 }
 
