@@ -12,6 +12,7 @@ import Spinner from '../components/feedback/Spinner'
 import FormRadio from '../components/form/FormRadio'
 import FormSelect from '../components/form/FormSelect'
 import FormNumber from '../components/form/FormNumber';
+import FormCheckbox from '../components/form/FormCheckbox';
 
 import {
   Button,
@@ -25,12 +26,10 @@ import {
   NumberInputStepper,
   NumberIncrementStepper,
   NumberDecrementStepper,
-  Select,
   Heading,
   Radio,
   RadioGroup,
   useRadioGroup,
-  Checkbox,
   Stack,
   HStack,
   useToast
@@ -45,13 +44,13 @@ const CreateListing = () => {
   const [formData, setFormData] = useState({
     type: 'sale',
     manufacturer: '',
+    modelName: '',
     offer: true,
     transmission: 'Automatic',
     modelYear: '2022',
     color: '',
     location: '',
     city: '',
-    taxiOrPrivate: '',
     mileage: '',
     price: '',
     discountedPrice: '',
@@ -247,6 +246,18 @@ const CreateListing = () => {
           dataKey='manufacturer'
         />
 
+        <FormControl className='mb-3'>
+          <FormLabel>Model Name</FormLabel>
+            <Input
+              variant='flushed'
+              id='modelName'
+              type='text'
+              value={formData.modelName}
+              onChange={changeHandler}
+              placeholder='ex. Toyota Camry'
+            />
+        </FormControl>
+
         <FormSelect
           name='Color'
           id='color'
@@ -269,42 +280,26 @@ const CreateListing = () => {
           </RadioGroup> 
         </FormControl>
 
-        <FormControl className='mb-3'>
-          <FormLabel htmlFor='modelYear'>Year</FormLabel>
-            <NumberInput 
-              max={2022} 
-              min={1920} 
-              onChange={(valueString) => setFormData(prev => ({
-                ...prev,
-                modelYear: valueString
-              }))} 
-              value={formData.modelYear}
-            >
-              <NumberInputField id='modelYear' />
-              <NumberInputStepper>
-                <NumberIncrementStepper />
-                <NumberDecrementStepper />
-              </NumberInputStepper>
-            </NumberInput>
-        </FormControl>
-        
-        <FormControl className='mb-3'>
-          <FormLabel htmlFor='mileage'>Mileage</FormLabel>
-            <NumberInput
-              min={0} 
-              onChange={(valueString) => setFormData(prev => ({
-                ...prev,
-                mileage: valueString
-              }))} 
-              value={formData.mileage}
-            >
-              <NumberInputField id='mileage' />
-              <NumberInputStepper>
-                <NumberIncrementStepper />
-                <NumberDecrementStepper />
-              </NumberInputStepper>
-            </NumberInput>
-        </FormControl>
+        <FormNumber
+          labelText='Year'
+          inputValue={formData.modelYear}
+          max='2022'
+          min='1920'
+          onChange={(valueString) => setFormData(prev => ({
+            ...prev,
+            modelYear: valueString
+          }))} 
+        />
+        <FormNumber
+          labelText='Mileage'
+          inputValue={formData.mileage}
+          min='0'
+          onChange={(valueString) => setFormData(prev => ({
+            ...prev,
+            mileage: valueString
+          }))} 
+        />     
+
 
         <FormControl className='mb-3'>
           <HStack onChange={(value) => setFormData(prev => ({
@@ -322,26 +317,16 @@ const CreateListing = () => {
           })}
           </HStack>
         </FormControl>
-
-        <FormControl className='mb-3'>
-          <FormLabel htmlFor='price' mb='0'>
-            Price
-          </FormLabel>
-          <NumberInput
-              min={0} 
-              onChange={(value) => setFormData(prev => ({
-                ...prev,
-                price: parse(value)
-              }))} 
-              value={format(formData.price)}
-            >
-              <NumberInputField id='price' />
-              <NumberInputStepper>
-                <NumberIncrementStepper />
-                <NumberDecrementStepper />
-              </NumberInputStepper>
-            </NumberInput>
-        </FormControl>
+        
+        <FormNumber
+          labelText='Price'
+          inputValue={format(formData.price)}
+          min='0'
+          onChange={(value) => setFormData(prev => ({
+            ...prev,
+            price: parse(value)
+          }))}
+        /> 
 
         <FormControl className='mb-3' display='flex' alignItems='center'>
           <FormLabel htmlFor='offer' mb='0'>
@@ -354,12 +339,12 @@ const CreateListing = () => {
             }))}        
           />
         </FormControl>
-
         <FormControl className='mb-3'>
           <FormLabel htmlFor='discountedPrice' mb='0'>
             Discount
           </FormLabel>
           <NumberInput
+              variant='flushed'
               isDisabled={!formData.offer}
               min={0}
               max={formData.price} 
@@ -387,18 +372,21 @@ const CreateListing = () => {
         />
         
         <FormControl className='mb-3'>
-          <FormLabel htmlFor='location'>Location (ex. neighborhood)</FormLabel>
-          <Input 
+          <FormLabel htmlFor='location'>Location</FormLabel>
+          <Input
+            variant='flushed' 
             value={formData.location} 
             onChange={changeHandler} 
             id='location' 
             type='text' 
+            placeholder='ex. your neighborhood'
           />
         </FormControl> 
         
         <FormControl className='mb-3'>
           <FormLabel htmlFor='notes'>Notes</FormLabel>
           <Textarea
+            variant='flushed'
             id='notes'
             value={formData.notes}
             onChange={changeHandler}
@@ -410,64 +398,55 @@ const CreateListing = () => {
         <FormControl className='mb-3'>
           <FormLabel htmlFor='options'>More options</FormLabel>
           <Stack id='options' spacing={5} direction='row'>
-            <Checkbox 
-              value='leatherSeats' 
-              size='lg' 
-              colorScheme='teal' 
-              isChecked={formData.options.leatherSeats} 
-              onChange={() => setFormData(prev => ({
+            <FormCheckbox
+              checkboxValue='leatherSeats'
+              checkStatus = {formData.options.leatherSeats}
+              text='Leather Seats'
+              change = {() => setFormData(prev => ({
                 ...prev,
                 options: {
                   ...prev.options,
                   leatherSeats: !prev.options.leatherSeats
                 }
-            }))}>
-              Leather Seats
-            </Checkbox>
-            <Checkbox 
-              value='airBags' 
-              size='lg' 
-              colorScheme='teal' 
-              isChecked={formData.options.airBags} 
-              onChange={() => setFormData(prev => ({
+              
+              }))}
+            />
+            <FormCheckbox
+              checkboxValue='airBags'
+              checkStatus = {formData.options.airBags}
+              text='Air Bags'
+              change = {() => setFormData(prev => ({
                 ...prev,
                 options: {
                   ...prev.options,
                   airBags: !prev.options.airBags
                 }
-            }))}>
-              Air Bags
-            </Checkbox>
-
-            <Checkbox 
-              value='bluetooth' 
-              size='lg' 
-              colorScheme='teal' 
-              isChecked={formData.options.bluetooth} 
-              onChange={() => setFormData(prev => ({
+            }))}
+            />
+            <FormCheckbox
+              checkboxValue='bluetooth'
+              checkStatus = {formData.options.bluetooth}
+              text='Bluetooth'
+              change = {() => setFormData(prev => ({
                 ...prev,
                 options: {
                   ...prev.options,
                   bluetooth: !prev.options.bluetooth
                 }
-            }))}>
-            Bluetooth
-            </Checkbox>
-
-            <Checkbox 
-              value='fogLights' 
-              size='lg' 
-              colorScheme='teal' 
-              isChecked={formData.options.fogLights} 
-              onChange={() => setFormData(prev => ({
+            }))}
+            />
+            <FormCheckbox
+              checkboxValue='fogLights'
+              checkStatus = {formData.options.fogLights}
+              text='Fog Lights'
+              change = {() => setFormData(prev => ({
                 ...prev,
                 options: {
                   ...prev.options,
                   fogLights: !prev.options.fogLights
                 }
-            }))}>
-            Fog Lights
-            </Checkbox>
+            }))}
+            />
         </Stack>
         </FormControl>
 

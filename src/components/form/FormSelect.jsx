@@ -6,7 +6,8 @@ const FormSelect = ( { name, id, handler, value, selectData, dataKey } ) => {
   return (
     <FormControl className='mb-3'>
           <FormLabel htmlFor='city'>{name}</FormLabel>
-          <Select 
+          <Select
+            variant='flushed' 
             id={id} 
             onChange={handler}
             value={value}

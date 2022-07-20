@@ -3,7 +3,9 @@ import { getDoc, doc, collection } from 'firebase/firestore'
 import { getAuth } from 'firebase/auth'
 import { useNavigate, useParams } from 'react-router-dom'
 import Spinner from '../components/feedback/Spinner'
-import { Image, Container, Box, Heading, Stack, Text } from '@chakra-ui/react' 
+import { Image, Container, Box, Heading, Stack, Text, Button } from '@chakra-ui/react'
+import { ArrowForwardIcon } from '@chakra-ui/icons'
+
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
@@ -73,7 +75,7 @@ const ListingDetails = () => {
               <Text fontSize='md'>Color: {carListing.color}</Text>
               <Text fontSize='md'>Year: {carListing.modelYear}</Text>
               <Text fontSize='md'>Transmission: {carListing.transmission}</Text>
-              <Text fontSize='md'>Mileage: {carListing.mileage}</Text>
+              <Text fontSize='md'>Mileage: {carListing.mileage} {' '} Km</Text>
               <Text fontSize='md'>
                 {carListing.type === 'sale' ? 'Price:' : 'Rent:'}
                 { ' ' } {carListing.price} $ { ' ' }
@@ -84,9 +86,19 @@ const ListingDetails = () => {
                   Note: {carListing.notes}
                 </Text>
               }
-        </Stack>       
+        </Stack>
+        {auth.currentUser.uid === carListing.userRef && 
+        <Button
+          className='my-4'
+          rightIcon={<ArrowForwardIcon />} 
+          size='lg' 
+          colorScheme='orange' 
+          variant='outline'>
+            Contact Owner
+        </Button>
+        }       
         </Box>
-        {auth.currentUser.uid !== carListing.userRef && 'Contact'}
+       
     </Box>
   )
 }

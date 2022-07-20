@@ -9,20 +9,18 @@ import {
     NumberDecrementStepper
 } from '@chakra-ui/react'
 
-const FormNumber = () => {
+const FormNumber = ( { labelText, max, min, inputValue, onChange } ) => {
   return (
     <FormControl className='mb-3'>
-        <FormLabel htmlFor='modelYear'>Year</FormLabel>
-        <NumberInput 
-            max={2022} 
-            min={1920} 
-            onChange={(valueString) => setFormData(prev => ({
-            ...prev,
-            modelYear: valueString
-            }))} 
-            value={formData.modelYear}
+        <FormLabel>{labelText}</FormLabel>
+        <NumberInput
+            variant='flushed' 
+            max={max} 
+            min={min} 
+            onChange={onChange}
+            value={inputValue}
         >
-            <NumberInputField id='modelYear' />
+            <NumberInputField />
             <NumberInputStepper>
             <NumberIncrementStepper />
             <NumberDecrementStepper />
