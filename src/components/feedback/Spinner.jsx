@@ -8,7 +8,7 @@ const SpinnerComponent = () => {
           thickness='4px'
           speed='0.50s'
           emptyColor='gray.200'
-          color='teal.500'
+          color='orange.500'
           size='xl'
         />
     </div>
