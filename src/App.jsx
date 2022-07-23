@@ -11,33 +11,28 @@ import Listings from './pages/Listings';
 import CreateListing from './pages/CreateListing';
 import ListingDetails from './pages/ListingDetails';
 import PrivateRoute from './components/PrivateRoute';
-import { LoadingProvider } from './contexts/loading/loadingContext';
 import Header from './components/navbar/Header'
 
-import 'react-toastify/dist/ReactToastify.css';
-
-
-
+import { LoadingProvider } from './contexts/loading/loadingContext';
 
 function App() {
   return (
     <LoadingProvider>
-      
       <Router>
         <Header />
         <Routes>
-          <Route path='/' element={<Explore />} />
-          <Route path='/sign-in' element={<SignIn />} />
-          <Route path='/sign-up' element={<SignUp />} />
-          <Route path='/forget-password' element={<ForgetPassword />} />
-          <Route path='/offers' element={<Offers />} />
-          <Route path='/explore' element={<Explore />} />
+          <Route exact path='/' element={<Explore />} />
+          <Route exact path='/sign-in' element={<SignIn />} />
+          <Route exact path='/sign-up' element={<SignUp />} />
+          <Route exact path='/forget-password' element={<ForgetPassword />} />
+          <Route exact path='/offers' element={<Offers />} />
+          <Route exact path='/explore' element={<Explore />} />
           <Route path='/profile' element={<PrivateRoute />}>
             <Route path='/profile' element={<Profile />} />
           </Route>
-          <Route path='category/:categoryName' element={<Listings />} />
-          <Route path='/create-listing' element={<CreateListing />} />
-          <Route path='/category/:categoryName/:listingId' element={<ListingDetails />} />
+          <Route exact path='category/:categoryName' element={<Listings />} />
+          <Route exact path='/create-listing' element={<CreateListing />} />
+          <Route exact path='/category/:categoryName/:listingId' element={<ListingDetails />} />
         </Routes>
       </Router>
     </LoadingProvider>

@@ -37,7 +37,7 @@ const Listings = () => {
        
       }
     fetchCars()
-  }, [])
+  }, [params.categoryName])
 
   return (
     <>

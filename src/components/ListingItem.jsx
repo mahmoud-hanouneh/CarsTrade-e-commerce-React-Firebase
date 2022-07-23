@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Button, Heading, Text, Flex, Box, Image } from '@chakra-ui/react'
+import { Button, Heading, Text, Flex, Box, Image, Stack } from '@chakra-ui/react'
 import { ImLocation } from 'react-icons/im' 
 import { FaBluetooth, FaCarCrash } from 'react-icons/fa'
 import { GiCarSeat } from 'react-icons/gi'
@@ -23,7 +23,7 @@ const ListingItem = ( { data, id } ) => {
                 {data.city}
           </Text>
 
-          <Flex className='mt-1'>
+          <Stack direction={['column', 'row']} spacing='15px' className='mt-1'>
             <Box className='mr-3'>
               
             <Text fontSize='md p-4' as={data.options && data.options.leatherSeats ? '' : 's'}>
@@ -52,7 +52,7 @@ const ListingItem = ( { data, id } ) => {
             </Text>
               
             </Box>
-          </Flex>
+          </Stack>
           
           <Flex className='mt-2'>
             <Box className='mr-3'>

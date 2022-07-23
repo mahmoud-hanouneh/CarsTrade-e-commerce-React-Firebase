@@ -397,7 +397,7 @@ const CreateListing = () => {
 
         <FormControl className='mb-3'>
           <FormLabel htmlFor='options'>More options</FormLabel>
-          <Stack id='options' spacing={5} direction='row'>
+          <Stack id='options' direction={['column', 'row']} spacing='15px'>
             <FormCheckbox
               checkboxValue='leatherSeats'
               checkStatus = {formData.options.leatherSeats}
