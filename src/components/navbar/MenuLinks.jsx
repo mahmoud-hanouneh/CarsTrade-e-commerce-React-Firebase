@@ -1,9 +1,21 @@
-import React from 'react'
-import { Stack, Box, Button } from '@chakra-ui/react'
+import React, { useEffect, useState } from 'react'
+import { Stack, Box, Button, HStack, VStack, Avatar } from '@chakra-ui/react'
 import MenuItem from './MenuItem'
+import { AiOutlineAppstoreAdd } from 'react-icons/ai'
+import UserProfile from './UserProfile'
+import useAuthentication from '../../hooks/useAuthentication'
+
 
 
 const MenuLinks = ({ isOpen }) => {
+
+  const [logState, setLogState] = useState(null)
+  const {isLogged} = useAuthentication()
+
+  useEffect(() => {
+    setLogState(isLogged)
+  }, [isLogged])
+  
   return (
     <Box
         display={{ base: isOpen ? "block" : "none", md: "block" }}
@@ -20,7 +32,9 @@ const MenuLinks = ({ isOpen }) => {
         <MenuItem to="/category/sale">Sale</MenuItem>
         <MenuItem to="/category/rent">Rent</MenuItem>
         <MenuItem to="/profile">Profile</MenuItem>
-        <MenuItem to="/create-listing">Add an ad</MenuItem>
+        <MenuItem to="/create-listing">
+           <AiOutlineAppstoreAdd size='1.2rem' />
+        </MenuItem>
         <MenuItem to='sign-in'>
           <Button variant='outline' colorScheme='orange' size='md'>
               Sign In
@@ -33,6 +47,7 @@ const MenuLinks = ({ isOpen }) => {
           </Button>
         </MenuItem>
 
+        {logState && <UserProfile />}
         
       </Stack>
     </Box>

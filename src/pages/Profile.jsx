@@ -104,6 +104,9 @@ const Profile = () => {
               {isEditing ? <CheckIcon className='ml-2' /> : <EditIcon className='ml-2' /> }
               
         </Button>
+        <Button onClick={() => signoutHandler()}>
+          Singout
+        </Button>
         </Box>
       </Flex>
       

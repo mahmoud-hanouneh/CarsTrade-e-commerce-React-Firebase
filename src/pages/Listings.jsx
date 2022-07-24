@@ -4,6 +4,8 @@ import { useParams } from 'react-router-dom'
 import { db } from '../firebase.config'
 import { collection, getDocs, where, query } from 'firebase/firestore'
 import Spinner from '../components/feedback/Spinner'
+import { Heading } from '@chakra-ui/react'
+
 
 const Listings = () => {
   const [loading, setLoading] = useState(true)
@@ -41,12 +43,12 @@ const Listings = () => {
 
   return (
     <>
-        <h2>
+        <Heading as='h2' size='xl' mb='2rem' ml='6rem'>
             {params.categoryName === 'rent' 
-                ? 'Cars for rent'
-                : 'Cars for sale'
+                ? 'Cars For Rent'
+                : 'Cars For Sale'
             }
-        </h2>
+        </Heading>
         {loading ? <Spinner /> : cars && cars.length > 0 ?
             <>
                 {cars.map(car => {

@@ -1,17 +1,18 @@
 import React from 'react'
-import { Box, Image, Button, Grid } from '@chakra-ui/react'
+import { Box, Image, Button, Stack } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 import saleImg from '../images/sale.jpg'
 import rentImg from '../images/rent.jpg'
 
-const Explore = () => {
 
+const Explore = () => {
+ 
   const property = {
     imageUrl: '',
     imageAlt: 'Image',
   }
     return (
-        <Grid templateColumns='repeat(2, 1fr)' gap={3} alignItems='center'>
+        <Stack direction={['column', 'row']} spacing='35px' align='center' justify='center' mt='5rem'>
           <Box maxW='sm' borderWidth='1px' borderRadius='lg' overflow='hidden'>
               <Image src={saleImg} alt={property.imageAlt} />
               <Box p='2'>
@@ -23,10 +24,10 @@ const Explore = () => {
                     noOfLines={1}
                     className='mb-3'
                   >
-                  Sale
+                  Cars For Sale
                   </Box>
                   <Link to='/category/sale'>
-                    <Button colorScheme='orange' size='sm'>Cars for sale</Button>
+                    <Button colorScheme='orange' size='sm'>Explore</Button>
                   </Link>
               </Box>
           </Box>
@@ -41,17 +42,17 @@ const Explore = () => {
                   noOfLines={1}
                   className='mb-3'
                 >
-                Explore cars for rent
+                Cars For Rent
                 </Box>
               
                 <Link to='/category/rent'>
-                  <Button colorScheme='orange' size='sm'>Cars for rent</Button>
+                  <Button colorScheme='orange' size='sm'>Explore</Button>
                 </Link>
                 
             </Box>
           </Box>
 
-      </Grid>
+      </Stack>
   )
     
 }

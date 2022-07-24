@@ -3,13 +3,13 @@ import MenuToggle from './MenuToggle'
 import NavbarContainer from './NavbarContainer'
 import Logo from './Logo'
 import MenuLinks from './MenuLinks'
-import LogLinks from './LogLinks'
 
-import { Button, Stack } from '@chakra-ui/react'
+
 
 const Header = (props) => {
   const [isOpen, setIsOpen] = useState(false)
   const toggle = () => setIsOpen(prev => !prev)
+  
   return (
     <>
         <NavbarContainer {...props}>
@@ -19,6 +19,7 @@ const Header = (props) => {
           />
           <MenuToggle isOpen={isOpen} toggle={toggle} />
           <MenuLinks isOpen={isOpen} />
+          
         </NavbarContainer>
     
     </>
