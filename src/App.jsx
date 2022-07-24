@@ -24,7 +24,7 @@ function App() {
           <Route exact path='/' element={<Explore />} />
           <Route exact path='/sign-in' element={<SignIn />} />
           <Route exact path='/sign-up' element={<SignUp />} />
-          <Route exact path='/forget-password' element={<ForgetPassword />} />
+          <Route exact path='/forgot-password' element={<ForgetPassword />} />
           <Route exact path='/offers' element={<Offers />} />
           <Route exact path='/explore' element={<Explore />} />
           <Route path='/profile' element={<PrivateRoute />}>

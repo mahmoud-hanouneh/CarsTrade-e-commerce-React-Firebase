@@ -6,8 +6,7 @@ import {
   InputGroup,
   Button,
   InputRightElement,
-  FormErrorMessage,
-  FormHelperText,
+  useToast
 } from '@chakra-ui/react'
 
 // firebase
@@ -15,8 +14,8 @@ import { getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase
 import { doc, setDoc, serverTimestamp } from 'firebase/firestore'
 import { db } from '../firebase.config'
 
+// react-router-dom
 import { Link, useNavigate } from 'react-router-dom'
-import { toast, ToastContainer } from 'react-toastify'
 
 const SignUp = () => {
 
@@ -26,11 +25,13 @@ const SignUp = () => {
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
+    phone: '',
     password: ''
   })
-  const { fullName, username, email, password } = formData
-  const navigate = useNavigate()
+  const { fullName, email, phone, password } = formData
 
+  const navigate = useNavigate()
+  const toast = useToast()
   const changeHandler = (e) => {
     setFormData((prev) => ({
       ...prev,
@@ -65,10 +66,24 @@ const SignUp = () => {
     } catch (error) {
         switch(error.code) {
           case 'auth/email-already-in-use':
-            toast.error('The email is already in use!')
+            toast({
+              title: 'Alert',
+              description: "The email is already in use!",
+              position: 'top',
+              status: 'error',
+              duration: 3000,
+              isClosable: true,
+            })
             break;
           default:
-            toast.error('Somethin went wrong!')
+            toast({
+              title: 'Fail',
+              description: "Somethin went wrong!",
+              position: 'top',
+              status: 'error',
+              duration: 3000,
+              isClosable: true,
+            })
             break;
         }
         setLoading(false)     
@@ -98,7 +113,12 @@ const SignUp = () => {
                 <FormLabel htmlFor='email'>Email Address</FormLabel>
                 <Input onChange={changeHandler} value={email} id='email' type='email' placeholer='Email' />
               </FormControl>
-              <FormControl>
+              <FormControl isRequired>
+                <FormLabel htmlFor='phone'>Phone Number</FormLabel>
+                <Input onChange={changeHandler} value={phone} id='phone' type='number' placeholer='Phone Number' />
+              </FormControl>
+
+              <FormControl isRequired>
                 <FormLabel htmlFor='password'>Password</FormLabel>
                 <InputGroup size='md'>
                   <Input
@@ -117,28 +137,25 @@ const SignUp = () => {
                 </InputGroup>
               </FormControl>
              
-
-               <div className="flex items-center justify-between">
-
+             <div className="flex items-center justify-between">
               <div className="text-sm">
-                <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
+                <Link to='/forgot-password' className="font-medium text-indigo-600 hover:text-indigo-500">
                   Forgot your password?
-                </a>
+                </Link>
               </div>
             </div>
-              <Button
+            <Button
               className='mt-2'
               type='submit' 
               isLoading={loading} 
               loadingText='Submitting' 
               colorScheme='teal'>
                 Register
-              </Button>
+            </Button>
              
       </form>
       </div>
     </div>
-    <ToastContainer />
      
     </>
   )

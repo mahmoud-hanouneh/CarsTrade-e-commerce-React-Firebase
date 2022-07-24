@@ -79,7 +79,7 @@ const Profile = () => {
   }
   const signoutHandler = () => {
     auth.signOut()
-    navigate('/')
+    navigate('/sign-in')
   }
   return (
     <div className='container p-4'>

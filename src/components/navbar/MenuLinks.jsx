@@ -4,17 +4,17 @@ import MenuItem from './MenuItem'
 import { AiOutlineAppstoreAdd } from 'react-icons/ai'
 import UserProfile from './UserProfile'
 import useAuthentication from '../../hooks/useAuthentication'
-
-
+import { useNavigate } from 'react-router-dom'
+ 
 
 const MenuLinks = ({ isOpen }) => {
 
-  const [logState, setLogState] = useState(null)
-  const {isLogged} = useAuthentication()
+  const { isLogged } = useAuthentication()
+  const navigate = useNavigate()
 
   useEffect(() => {
-    setLogState(isLogged)
-  }, [isLogged])
+    console.log(isLogged)
+  }, [navigate])
   
   return (
     <Box
@@ -35,19 +35,24 @@ const MenuLinks = ({ isOpen }) => {
         <MenuItem to="/create-listing">
            <AiOutlineAppstoreAdd size='1.2rem' />
         </MenuItem>
-        <MenuItem to='sign-in'>
-          <Button variant='outline' colorScheme='orange' size='md'>
-              Sign In
-          </Button>
+        {!isLogged && 
+         <MenuItem to='sign-in'>
+            <Button variant='outline' colorScheme='orange' size='md'>
+                Sign In
+            </Button>
         </MenuItem>
+        }
+       
+        {!isLogged && 
+            <MenuItem to='sign-up'>
+              <Button colorScheme='orange' size='md'>
+                  Sign Up
+              </Button>
+            </MenuItem>
+        }
 
-        <MenuItem to='sign-up'>
-          <Button colorScheme='orange' size='md'>
-              Sign Up
-          </Button>
-        </MenuItem>
 
-        {logState && <UserProfile />}
+        {isLogged && <UserProfile />}
         
       </Stack>
     </Box>
