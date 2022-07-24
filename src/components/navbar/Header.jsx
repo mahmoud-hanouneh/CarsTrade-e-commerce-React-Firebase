@@ -9,7 +9,6 @@ import MenuLinks from './MenuLinks'
 const Header = (props) => {
   const [isOpen, setIsOpen] = useState(false)
   const toggle = () => setIsOpen(prev => !prev)
-  
   return (
     <>
         <NavbarContainer {...props}>

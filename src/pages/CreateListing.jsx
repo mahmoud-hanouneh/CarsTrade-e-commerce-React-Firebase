@@ -235,7 +235,7 @@ const CreateListing = () => {
    <>
    <form onSubmit={submitHandler}>
     <div className="container w-9/12 mx-auto p-4">
-        <Heading className='my-2'>Add your car ad</Heading>
+        <Heading className='mb-8'>Post For Free</Heading>
 
         <FormSelect
           name='Manufacturer'

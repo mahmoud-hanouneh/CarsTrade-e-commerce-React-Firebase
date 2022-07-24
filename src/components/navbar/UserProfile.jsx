@@ -4,7 +4,7 @@ import {
     MenuItem, MenuList,
 } from "@chakra-ui/react";
 
-import { FiChevronDown, FiBell } from "react-icons/fi";
+import { FiChevronDown } from "react-icons/fi";
 import { getAuth } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 
@@ -39,7 +39,7 @@ const UserProfile = () => {
                     spacing="1px"
                     ml="2"
                   >
-                    <Text fontSize="lg" color='gray.600'>{auth.currentUser.displayName}</Text>
+                    <Text fontSize="lg" color='gray.600'>{auth.currentUser.displayName && auth.currentUser.displayName}</Text>
                     <Text fontSize="md" color="gray.600">
                       Member
                     </Text>

@@ -5,16 +5,25 @@ import { AiOutlineAppstoreAdd } from 'react-icons/ai'
 import UserProfile from './UserProfile'
 import useAuthentication from '../../hooks/useAuthentication'
 import { useNavigate } from 'react-router-dom'
- 
+import { onAuthStateChanged, getAuth } from 'firebase/auth' 
 
 const MenuLinks = ({ isOpen }) => {
 
-  const { isLogged } = useAuthentication()
+  const [loginState, setLoginState] = useState(true)
   const navigate = useNavigate()
-
+  
   useEffect(() => {
-    console.log(isLogged)
-  }, [navigate])
+    
+    const auth = getAuth()
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setLoginState(true)
+      } else {
+        setLoginState(false)
+      }
+    })
+  }, [])
+  console.log(loginState)
   
   return (
     <Box
@@ -33,9 +42,9 @@ const MenuLinks = ({ isOpen }) => {
         <MenuItem to="/category/rent">Rent</MenuItem>
         <MenuItem to="/profile">Profile</MenuItem>
         <MenuItem to="/create-listing">
-           <AiOutlineAppstoreAdd size='1.2rem' />
+           <AiOutlineAppstoreAdd color='orange' size='1.7rem' />
         </MenuItem>
-        {!isLogged && 
+        {!loginState && 
          <MenuItem to='sign-in'>
             <Button variant='outline' colorScheme='orange' size='md'>
                 Sign In
@@ -43,7 +52,7 @@ const MenuLinks = ({ isOpen }) => {
         </MenuItem>
         }
        
-        {!isLogged && 
+        {!loginState && 
             <MenuItem to='sign-up'>
               <Button colorScheme='orange' size='md'>
                   Sign Up
@@ -52,7 +61,7 @@ const MenuLinks = ({ isOpen }) => {
         }
 
 
-        {isLogged && <UserProfile />}
+        {loginState && <UserProfile />}
         
       </Stack>
     </Box>

@@ -33,7 +33,7 @@ const Profile = () => {
 
   const { name, email } = formData
   const submitHandler = async (e) => {
-    
+    e.preventDefault()
     dispatch({ type: 'START_LOADING' })
     try {
       if (name !== auth.currentUser.displayName) {
@@ -82,31 +82,38 @@ const Profile = () => {
     navigate('/sign-in')
   }
   return (
-    <div className='container p-4'>
+    <div className='container p-9'>
       <Flex className='mb-4'>
         <Box>
           <Heading>My Info</Heading>
         </Box>
         <Spacer />
         <Box>
-        <Button
-          variant={isEditing ? 'outline' : 'solid'}
-          isLoading = {buttonLoading}
-          onClick={() => {
-            isEditing && submitHandler()
-            setIsEditing(prev => !prev)
-          }}  
-          colorScheme='teal' 
-          size='sm'
-          loadingText='Editing ..'
+          <Button
+            className='mx-1'
+            variant={isEditing ? 'outline' : 'solid'}
+            isLoading = {buttonLoading}
+            onClick={() => {
+              isEditing && submitHandler()
+              setIsEditing(prev => !prev)
+            }}  
+            colorScheme='teal' 
+            size='sm'
+            loadingText='Editing ..'
           >
               {isEditing ? 'Save' : 'Edit'}
               {isEditing ? <CheckIcon className='ml-2' /> : <EditIcon className='ml-2' /> }
               
-        </Button>
-        <Button onClick={() => signoutHandler()}>
-          Singout
-        </Button>
+          </Button>
+          <Button 
+            className='mx-1'
+            onClick={() => signoutHandler()}
+            variant='outline'
+            colorScheme='teal' 
+            size='sm'
+          >
+            Singout
+          </Button>
         </Box>
       </Flex>
       

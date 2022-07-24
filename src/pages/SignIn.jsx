@@ -10,9 +10,9 @@ import {
   InputRightElement,
   FormErrorMessage,
   FormHelperText,
+  useToast
 } from '@chakra-ui/react'
 
-import { ToastContainer, toast } from 'react-toastify';
 
 export default function SignIn() {
   const [loading, setLoading] = useState(false)
@@ -23,6 +23,7 @@ export default function SignIn() {
   })
   const { email, password } = formData
   const nav = useNavigate()
+  const toast = useToast()
 
   const changeHandler = (e) => {
     setFormData(prev => ({
@@ -46,13 +47,35 @@ export default function SignIn() {
       setLoading(false)
       switch(error.code) {
         case 'auth/network-request-failed':
-          toast.error('Network error! check you internet connection')
+          toast({
+            title: 'Error!',
+            description: "Network error! check you internet connection",
+            position: 'top',
+            status: 'error',
+            duration: 3000,
+            isClosable: true,
+          })
           break;
         case 'auth/wrong-password':
-          toast.error('Wrong email or password!')
+          toast({
+            title: 'Wrong Enteries',
+            description: "Wrong email or password!",
+            position: 'top',
+            status: 'error',
+            duration: 3000,
+            isClosable: true,
+          })
           break;
         default:
           toast.error('Something went wrong! please try signing later')
+          toast({
+            title: 'Error!',
+            description: "Something went wrong! please try signing later",
+            position: 'top',
+            status: 'error',
+            duration: 3000,
+            isClosable: true,
+          })
       }
     }
   }
@@ -98,9 +121,9 @@ export default function SignIn() {
                <div className="flex items-center justify-between">
 
               <div className="text-sm">
-                <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
+                <Link to='/sign-up' className="font-medium text-indigo-600 hover:text-indigo-500">
                   Dont have an account?
-                </a>
+                </Link>
               </div>
             </div>
               <Button
@@ -115,7 +138,6 @@ export default function SignIn() {
       </form>
       </div>
     </div>
-    <ToastContainer /> 
     </>
   )
 }
