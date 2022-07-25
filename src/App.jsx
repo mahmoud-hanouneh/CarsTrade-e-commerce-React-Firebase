@@ -9,6 +9,7 @@ import Offers from './pages/Offers';
 import Explore from './pages/Explore';
 import Listings from './pages/Listings';
 import CreateListing from './pages/CreateListing';
+import EditListing from './pages/EditListing';
 import ListingDetails from './pages/ListingDetails';
 import PrivateRoute from './components/PrivateRoute';
 import Header from './components/navbar/Header'
@@ -32,6 +33,7 @@ function App() {
           </Route>
           <Route exact path='category/:categoryName' element={<Listings />} />
           <Route exact path='/create-listing' element={<CreateListing />} />
+          <Route exact path='/edit-listing/:listingId' element={<EditListing />} />
           <Route exact path='/category/:categoryName/:listingId' element={<ListingDetails />} />
         </Routes>
       </Router>

@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect } from 'react'
 import { getAuth, updateProfile } from 'firebase/auth'
-import { setDoc, doc, collection, query, getDocs, where, orderBy } from 'firebase/firestore'
+import { setDoc, doc, collection, query, getDocs, where, deleteDoc } from 'firebase/firestore'
 import { db } from '../firebase.config'
 import { useNavigate } from 'react-router-dom'
 import LoadingContext from '../contexts/loading/loadingContext' 
@@ -113,6 +113,22 @@ const Profile = () => {
     auth.signOut()
     navigate('/sign-in')
   }
+
+  const deleteListing = async (listingId) => {
+    if (window.confirm('Are you sure')) {
+      await deleteDoc(doc(db, 'cars', listingId))
+      const updatedListings = listings.filter(listing => listing.id !== listingId)
+      setListings(updatedListings)
+      toast({
+        title: 'Success',
+        description: "Deleted",
+        position: 'top',
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+      })
+    }
+  }
   return (
     <>
     <div className='container p-9'>
@@ -164,6 +180,7 @@ const Profile = () => {
               id={listing.id}
               key={listing.id}
               data={listing.data}
+              deleteListing={() => deleteListing(listing.id)}
             />
           ))}
         </>

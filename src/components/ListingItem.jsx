@@ -1,19 +1,18 @@
 import { Link } from 'react-router-dom'
-import { getAuth } from 'firebase/auth'
-import { Button, Heading, Text, Flex, Box, Image, Stack } from '@chakra-ui/react'
+import { Button, Heading, Text, Flex, Box, Image, Stack, Badge } from '@chakra-ui/react'
 import { ImLocation } from 'react-icons/im' 
 import { FaBluetooth, FaCarCrash } from 'react-icons/fa'
 import { GiCarSeat } from 'react-icons/gi'
-import offerIcon from '../components/icons/offer-icon.png'
+import { AiTwotoneDelete } from 'react-icons/ai'
 
-const ListingItem = ( { data, id } ) => {
-  const auth = getAuth()
+
+const ListingItem = ( { data, id, deleteListing } ) => {
 
   return (
     <div className="flex flex-row p-6 gap-4 shadow-xl mb-8 w-10/12 mx-auto shadow-white shadow-slate-200">
       <div className="basis-1/4 relative">
           <Image className='w-fit max-h-min absolute' src={data.carImages[0]} alt="" />
-          {data.offer && <Image src={offerIcon} className='absolute right-0 w-10 h-10' />} 
+         {data.offer && <Badge colorScheme='red' className='absolute right-0'>offer</Badge>}
       </div>
       <div className="basis-1/2">
           <Heading className='mb-3' as='h4' size='md'>
@@ -94,15 +93,18 @@ const ListingItem = ( { data, id } ) => {
             <span className='text-sm mx-1'>{data.type === 'rent' ? '/Month' : 'Total'}</span>
             {data.offer && <Text className='text-orange-500	font-bold	'>{data.discountedPrice} $</Text>}
           </Box>
-
-          <Button colorScheme='orange' className='mt-3'>
-            <Link to={`/category/${data.type}/${id}`}>View Details</Link>
-          </Button> 
-          {auth.currentUser.uid == data.userRef && (
-            <Button colorScheme='orange' variant='outline' className='mt-3'>
-              <Link to={`/category/${data.type}/${id}`}>Delete</Link>
-            </Button> 
-          )}
+          <Stack direction={['column', 'row']} spacing='8px'>
+            <Button colorScheme='orange' className='mt-3'>
+              <Link to={`/category/${data.type}/${id}`}>View Details</Link>
+            </Button>
+            {deleteListing && (
+                <AiTwotoneDelete onClick={() => deleteListing(data.id)} size='2rem' color='black' className='cursor-pointer mb-0' />
+            )}
+            <Button colorScheme='orange' className='mt-3'>
+              <Link to={`/edit-listing/${id}`}>Edit</Link>
+            </Button>
+          </Stack>
+         
          
              
       </div>
