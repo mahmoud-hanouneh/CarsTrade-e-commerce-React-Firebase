@@ -5,13 +5,22 @@ import {
 } from "@chakra-ui/react";
 
 import { FiChevronDown } from "react-icons/fi";
-import { getAuth } from 'firebase/auth';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 
 const UserProfile = () => {
   const auth = getAuth()
   const nav = useNavigate()
+  const [displayName, setDisplayName] = useState(null)
 
+  useEffect(() => {
+    
+    onAuthStateChanged(auth, (user) => {
+      if(user) {
+        setDisplayName(auth.currentUser.displayName)
+      }
+  })
+  },[])
   const signOutHandler = () => {
     auth.signOut()
     nav('/sign-in')
@@ -39,7 +48,7 @@ const UserProfile = () => {
                     spacing="1px"
                     ml="2"
                   >
-                    <Text fontSize="lg" color='gray.600'>{auth.currentUser.displayName && auth.currentUser.displayName}</Text>
+                    <Text fontSize="lg" color='gray.600'>{displayName}</Text>
                     <Text fontSize="md" color="gray.600">
                       Member
                     </Text>

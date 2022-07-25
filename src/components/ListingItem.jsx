@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { getAuth } from 'firebase/auth'
 import { Button, Heading, Text, Flex, Box, Image, Stack } from '@chakra-ui/react'
 import { ImLocation } from 'react-icons/im' 
 import { FaBluetooth, FaCarCrash } from 'react-icons/fa'
@@ -6,6 +7,7 @@ import { GiCarSeat } from 'react-icons/gi'
 import offerIcon from '../components/icons/offer-icon.png'
 
 const ListingItem = ( { data, id } ) => {
+  const auth = getAuth()
 
   return (
     <div className="flex flex-row p-6 gap-4 shadow-xl mb-8 w-10/12 mx-auto shadow-white shadow-slate-200">
@@ -94,12 +96,17 @@ const ListingItem = ( { data, id } ) => {
           </Box>
 
           <Button colorScheme='orange' className='mt-3'>
-            
             <Link to={`/category/${data.type}/${id}`}>View Details</Link>
           </Button> 
-
+          {auth.currentUser.uid == data.userRef && (
+            <Button colorScheme='orange' variant='outline' className='mt-3'>
+              <Link to={`/category/${data.type}/${id}`}>Delete</Link>
+            </Button> 
+          )}
+         
              
       </div>
+      
     </div>
   )
 }

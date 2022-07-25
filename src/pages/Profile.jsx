@@ -1,9 +1,12 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { getAuth, updateProfile } from 'firebase/auth'
-import { setDoc, doc } from 'firebase/firestore'
+import { setDoc, doc, collection, query, getDocs, where, orderBy } from 'firebase/firestore'
 import { db } from '../firebase.config'
 import { useNavigate } from 'react-router-dom'
 import LoadingContext from '../contexts/loading/loadingContext' 
+import ListingItem from '../components/ListingItem'
+import Spinner from '../components/feedback/Spinner'
+
 import {
   Button,
   Heading,
@@ -20,6 +23,7 @@ import {
 } from '@chakra-ui/icons'
 
 const Profile = () => {
+
   const navigate = useNavigate()
   const auth = getAuth()
   const toast = useToast()
@@ -28,12 +32,40 @@ const Profile = () => {
     name: auth.currentUser.displayName,
     email: auth.currentUser.email
   })
-
-  const { buttonLoading, dispatch } = useContext(LoadingContext)
-
   const { name, email } = formData
+
+  const [listings, setListings] = useState(null)
+
+  const { spinnerLoading, buttonLoading, dispatch } = useContext(LoadingContext)
+
+  useEffect(() => {
+
+    const fetchUserListings = async () => {
+      const listingRef = collection(db, 'cars')
+
+      const q = query(
+        listingRef,
+        where('userRef', '==', auth.currentUser.uid),
+      )
+
+      const querySnap = await getDocs(q)
+      let listings = []
+      querySnap.forEach(doc => {
+        return listings.push({
+          id: doc.id,
+          data: doc.data()
+        })
+      })
+
+      setListings(listings)
+      dispatch({ type: 'STOP_SPINNER_LOADING' })
+    }
+
+    fetchUserListings()
+  }, [auth.currentUser.uid])
+
   const submitHandler = async (e) => {
-    e.preventDefault()
+
     dispatch({ type: 'START_LOADING' })
     try {
       if (name !== auth.currentUser.displayName) {
@@ -82,6 +114,7 @@ const Profile = () => {
     navigate('/sign-in')
   }
   return (
+    <>
     <div className='container p-9'>
       <Flex className='mb-4'>
         <Box>
@@ -120,7 +153,25 @@ const Profile = () => {
      
       <Input className='mt-3' id='name' value={name} onChange={changeHandler} disabled={!isEditing} />
       <Input className='mt-3' id='email' value={email} onChange={changeHandler} disabled={!isEditing} />
+
+      <Heading className='mt-5'>My Advertisments</Heading>
+      { spinnerLoading && <Spinner /> }
+      {
+        listings?.length > 0 && 
+        <>
+          {listings.map(listing => (
+            <ListingItem 
+              id={listing.id}
+              key={listing.id}
+              data={listing.data}
+            />
+          ))}
+        </>
+      }
+
     </div>
+    </>
+    
   )
 }
 
