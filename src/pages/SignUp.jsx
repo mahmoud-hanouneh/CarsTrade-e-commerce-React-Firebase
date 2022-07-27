@@ -25,10 +25,9 @@ const SignUp = () => {
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
-    phone: '',
     password: ''
   })
-  const { fullName, email, phone, password } = formData
+  const { fullName, email, password } = formData
 
   const navigate = useNavigate()
   const toast = useToast()
@@ -112,10 +111,6 @@ const SignUp = () => {
               <FormControl isRequired>
                 <FormLabel htmlFor='email'>Email Address</FormLabel>
                 <Input onChange={changeHandler} value={email} id='email' type='email' placeholer='Email' />
-              </FormControl>
-              <FormControl isRequired>
-                <FormLabel htmlFor='phone'>Phone Number</FormLabel>
-                <Input onChange={changeHandler} value={phone} id='phone' type='number' placeholer='Phone Number' />
               </FormControl>
 
               <FormControl isRequired>

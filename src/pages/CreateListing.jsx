@@ -339,7 +339,7 @@ const CreateListing = () => {
             }))}        
           />
         </FormControl>
-        <FormControl className='mb-3'>
+        <FormControl className='mb-3' display={!formData.offer && 'none'}>
           <FormLabel htmlFor='discountedPrice' mb='0'>
             Discount
           </FormLabel>

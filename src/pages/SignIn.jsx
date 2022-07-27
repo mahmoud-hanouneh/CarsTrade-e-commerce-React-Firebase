@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { signInWithEmailAndPassword, getAuth } from 'firebase/auth'
 import { Link, useNavigate } from 'react-router-dom'
+import LoadingContext from '../contexts/loading/loadingContext'
 import {
   FormControl,
   FormLabel,
@@ -8,22 +9,23 @@ import {
   InputGroup,
   Button,
   InputRightElement,
-  FormErrorMessage,
-  FormHelperText,
   useToast
 } from '@chakra-ui/react'
 
 
 export default function SignIn() {
-  const [loading, setLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false) 
+
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   })
   const { email, password } = formData
+  const { buttonLoading, dispatch } = useContext(LoadingContext)
+
   const nav = useNavigate()
   const toast = useToast()
+  
 
   const changeHandler = (e) => {
     setFormData(prev => ({
@@ -33,7 +35,7 @@ export default function SignIn() {
   }
   const submitHandler = async e => {
     e.preventDefault()
-    setLoading(true)
+    dispatch({ type: 'START_LOADING' })
     const auth = getAuth()
     try {
       const userCredentials = await signInWithEmailAndPassword(auth, email, password)
@@ -44,7 +46,7 @@ export default function SignIn() {
 
     } catch (error) {
       console.log(error.code)
-      setLoading(false)
+      dispatch({ type: 'STOP_LOADING' })
       switch(error.code) {
         case 'auth/network-request-failed':
           toast({
@@ -82,62 +84,64 @@ export default function SignIn() {
 
   return (
     <>
-   <div className='min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8'>
-      <div className='max-w-md w-full space-y-8'>
-            <div>
-              <img
-                className="mx-auto h-12 w-auto"
-                src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-                alt="Workflow"
-              />
-              <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign in</h2>
-            </div>
-            <form className='mt-8 space-y-6' onSubmit={submitHandler}>
+      <div className='min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8'>
+        <div className='max-w-md w-full space-y-8'>
 
-              <FormControl>
-                <FormLabel htmlFor='email'>Email Address</FormLabel>
-                <Input placeholder='Enter your email'onChange={changeHandler} value={email} id='email' type='email' placeholer='Email' />
-              </FormControl>
-              <FormControl>
-                <FormLabel htmlFor='password'>Password</FormLabel>
-                <InputGroup size='md'>
-                  <Input
-                    value={password}
-                    onChange={changeHandler}
-                    id='password'
-                    pr='4.5rem'
-                    type={showPassword ? 'text' : 'password'}
-                    placeholder='Enter password'
-                  />
-                  <InputRightElement width='4.5rem'>
-                    <Button h='1.75rem' size='sm' onClick={() => setShowPassword(prev => !prev)}>
-                      {showPassword ? 'Hide' : 'Show'}
-                    </Button>
-                  </InputRightElement>
-                </InputGroup>
-              </FormControl>
-             
-
-               <div className="flex items-center justify-between">
-
-              <div className="text-sm">
-                <Link to='/sign-up' className="font-medium text-indigo-600 hover:text-indigo-500">
-                  Dont have an account?
-                </Link>
+              <div>
+                <img
+                  className="mx-auto h-12 w-auto"
+                  src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
+                  alt="Workflow"
+                />
+                <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign in</h2>
               </div>
-            </div>
-              <Button
-              className='mt-2'
-              type='submit' 
-              isLoading={loading} 
-              loadingText='Signing in' 
-              colorScheme='teal'>
-                Sign In
-              </Button>
-             
-      </form>
+
+              <form className='mt-8 space-y-6' onSubmit={submitHandler}>
+
+                <FormControl>
+                  <FormLabel htmlFor='email'>Email Address</FormLabel>
+                  <Input placeholder='Enter your email'onChange={changeHandler} value={email} id='email' type='email' placeholer='Email' />
+                </FormControl>
+
+                <FormControl>
+                  <FormLabel htmlFor='password'>Password</FormLabel>
+                  <InputGroup size='md'>
+                    <Input
+                      value={password}
+                      onChange={changeHandler}
+                      id='password'
+                      pr='4.5rem'
+                      type={showPassword ? 'text' : 'password'}
+                      placeholder='Enter password'
+                    />
+                    <InputRightElement width='4.5rem'>
+                      <Button h='1.75rem' size='sm' onClick={() => setShowPassword(prev => !prev)}>
+                        {showPassword ? 'Hide' : 'Show'}
+                      </Button>
+                    </InputRightElement>
+                  </InputGroup>
+                </FormControl>
+              
+                <div className="flex items-center justify-between">
+                  <div className="text-sm">
+                    <Link to='/sign-up' className="font-medium text-indigo-600 hover:text-indigo-500">
+                      Dont have an account?
+                    </Link>
+                  </div>
+                </div>
+                
+                <Button
+                  className='mt-2'
+                  type='submit' 
+                  isLoading={buttonLoading} 
+                  loadingText='Signing in' 
+                  colorScheme='teal'>
+                    Sign In
+                </Button>
+              
+              </form>
+        </div>
       </div>
-    </div>
     </>
   )
 }

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import ListingItem from '../components/ListingItem'
+import ListingItem from '../components/listings/ListingItem'
 import { useParams } from 'react-router-dom'
 import { db } from '../firebase.config'
 import { collection, getDocs, where, query } from 'firebase/firestore'

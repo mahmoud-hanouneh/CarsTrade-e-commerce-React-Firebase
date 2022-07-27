@@ -88,14 +88,17 @@ const ListingDetails = () => {
               }
         </Stack>
         {auth.currentUser.uid === carListing.userRef && 
-        <Button
-          className='my-4'
-          rightIcon={<ArrowForwardIcon />} 
-          size='lg' 
-          colorScheme='orange' 
-          variant='outline'>
-            Contact Owner
-        </Button>
+          <Link to={`/contact/${carListing.userRef}?listingName=${carListing.modelName}`}>
+           <Button
+            className='my-4'
+            rightIcon={<ArrowForwardIcon />} 
+            size='lg' 
+            colorScheme='orange' 
+            variant='outline'>
+              Contact Owner
+            </Button>
+          </Link>
+         
         }       
         </Box>
        

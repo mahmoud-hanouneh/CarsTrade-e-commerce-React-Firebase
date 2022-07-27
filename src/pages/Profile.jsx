@@ -4,7 +4,7 @@ import { setDoc, doc, collection, query, getDocs, where, deleteDoc } from 'fireb
 import { db } from '../firebase.config'
 import { useNavigate } from 'react-router-dom'
 import LoadingContext from '../contexts/loading/loadingContext' 
-import ListingItem from '../components/ListingItem'
+import ListingItem from '../components/listings/ListingItem'
 import Spinner from '../components/feedback/Spinner'
 
 import {
@@ -30,7 +30,7 @@ const Profile = () => {
   const [isEditing, setIsEditing] = useState(false)
   const [formData, setFormData] = useState({
     name: auth.currentUser.displayName,
-    email: auth.currentUser.email
+    email: auth.currentUser.email,
   })
   const { name, email } = formData
 

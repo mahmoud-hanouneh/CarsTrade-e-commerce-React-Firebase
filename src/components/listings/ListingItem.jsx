@@ -15,7 +15,7 @@ const ListingItem = ( { data, id, deleteListing } ) => {
          {data.offer && <Badge colorScheme='red' className='absolute right-0'>offer</Badge>}
       </div>
       <div className="basis-1/2">
-          <Heading className='mb-3' as='h4' size='md'>
+          <Heading className='mb-3' as='h4' size='lg'>
             {data.manufacturer}
           </Heading>
 
@@ -83,7 +83,7 @@ const ListingItem = ( { data, id, deleteListing } ) => {
           <hr />
       </div>
 
-      <div className="basis-1/4">
+      <div className="basis-1/4 relative">
         
           <Box>
             <Text fontSize='2xl'>{data.type === 'rent' ? 'Rent' : 'Price'}</Text>
@@ -93,23 +93,28 @@ const ListingItem = ( { data, id, deleteListing } ) => {
             <span className='text-sm mx-1'>{data.type === 'rent' ? '/Month' : 'Total'}</span>
             {data.offer && <Text className='text-orange-500	font-bold	'>{data.discountedPrice} $</Text>}
           </Box>
-          <Stack direction={['column', 'row']} spacing='8px'>
-            <Button colorScheme='orange' className='mt-3'>
-              <Link to={`/category/${data.type}/${id}`}>View Details</Link>
-            </Button>
-            {deleteListing && (
-                <AiTwotoneDelete onClick={() => deleteListing(data.id)} size='2rem' color='black' className='cursor-pointer mb-0' />
-            )}
-            <Button colorScheme='orange' className='mt-3'>
-              <Link to={`/edit-listing/${id}`}>Edit</Link>
-            </Button>
+
+          <Stack direction={['row', 'row']} spacing='8px'>
+            <Link to={`/category/${data.type}/${id}`}>
+              <Button colorScheme='orange' className='mt-3'>
+                View Details
+              </Button>
+            </Link>
+            <Link to={`/edit-listing/${id}`}>
+              <Button colorScheme='orange' variant='outline' className='mt-3 mx-1'>
+              Edit
+              </Button>
+            </Link>
           </Stack>
+
+         {deleteListing && (
+          <AiTwotoneDelete  onClick={() => deleteListing(data.id)} cursor='pointer' size={25} className='absolute top-0 right-0' /> 
+         )}
          
-         
-             
       </div>
       
     </div>
+
   )
 }
 
