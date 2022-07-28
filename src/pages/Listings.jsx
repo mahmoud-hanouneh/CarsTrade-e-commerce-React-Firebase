@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 import { db } from '../firebase.config'
 import { collection, getDocs, where, query } from 'firebase/firestore'
 import Spinner from '../components/feedback/Spinner'
+import ScaleSpinner from '../components/feedback/ScaleSpinner'
 import { Heading } from '@chakra-ui/react'
 
 
@@ -49,7 +50,7 @@ const Listings = () => {
                 : 'Cars For Sale'
             }
         </Heading>
-        {loading ? <Spinner /> : cars && cars.length > 0 ?
+        {loading ? <ScaleSpinner /> : cars && cars.length > 0 ?
             <>
                 {cars.map(car => {
                     return (

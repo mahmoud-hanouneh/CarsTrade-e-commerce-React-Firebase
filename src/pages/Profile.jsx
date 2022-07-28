@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import LoadingContext from '../contexts/loading/loadingContext' 
 import ListingItem from '../components/listings/ListingItem'
 import Spinner from '../components/feedback/Spinner'
-
+import FadeSpinner from '../components/feedback/FadeSpinner'
 import {
   Button,
   Heading,
@@ -21,6 +21,7 @@ import {
   CheckIcon,
   EditIcon,
 } from '@chakra-ui/icons'
+
 
 const Profile = () => {
 
@@ -75,6 +76,7 @@ const Profile = () => {
         const userRef = doc(db, 'users', auth.currentUser.uid)
         await setDoc(userRef, {
           name,
+          email
         })
       }
       console.log('success')
@@ -168,10 +170,11 @@ const Profile = () => {
       
      
       <Input className='mt-3' id='name' value={name} onChange={changeHandler} disabled={!isEditing} />
-      <Input className='mt-3' id='email' value={email} onChange={changeHandler} disabled={!isEditing} />
+      <Input className='mt-3' id='email' value={email} onChange={changeHandler} disabled />
 
       <Heading className='mt-5'>My Advertisments</Heading>
-      { spinnerLoading && <Spinner /> }
+      { spinnerLoading && <FadeSpinner  /> }
+  
       {
         listings?.length > 0 && 
         <>
@@ -181,6 +184,7 @@ const Profile = () => {
               key={listing.id}
               data={listing.data}
               deleteListing={() => deleteListing(listing.id)}
+              editListing
             />
           ))}
         </>

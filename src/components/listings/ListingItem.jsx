@@ -6,19 +6,21 @@ import { GiCarSeat } from 'react-icons/gi'
 import { AiTwotoneDelete } from 'react-icons/ai'
 
 
-const ListingItem = ( { data, id, deleteListing } ) => {
+const ListingItem = ( { data, id, deleteListing, editListing } ) => {
 
   return (
     <div className="flex flex-row p-6 gap-4 shadow-xl mb-8 w-10/12 mx-auto shadow-white shadow-slate-200">
       <div className="basis-1/4 relative">
-          <Image className='w-fit max-h-min absolute' src={data.carImages[0]} alt="" />
+          <Image borderRadius={20} className='w-fit max-h-min absolute' src={data.carImages[0]} alt="" />
          {data.offer && <Badge colorScheme='red' className='absolute right-0'>offer</Badge>}
       </div>
       <div className="basis-1/2">
           <Heading className='mb-3' as='h4' size='lg'>
             {data.manufacturer}
           </Heading>
-
+          <Heading className='mb-3' as='h5' size='sm'>
+            {data.modelName && data.modelName}
+          </Heading>
           <Text fontSize='md p-4'>
                 <ImLocation className='inline mr-2' />
                 {data.city}
@@ -100,11 +102,15 @@ const ListingItem = ( { data, id, deleteListing } ) => {
                 View Details
               </Button>
             </Link>
-            <Link to={`/edit-listing/${id}`}>
-              <Button colorScheme='orange' variant='outline' className='mt-3 mx-1'>
-              Edit
-              </Button>
-            </Link>
+            
+            {editListing && (
+              <Link to={`/edit-listing/${id}`}>
+                <Button colorScheme='orange' variant='outline' className='mt-3 mx-1'>
+                Edit
+                </Button>
+              </Link>
+            )}
+          
           </Stack>
 
          {deleteListing && (

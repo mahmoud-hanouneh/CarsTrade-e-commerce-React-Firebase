@@ -2,6 +2,7 @@ import { useState, useContext } from 'react'
 import { signInWithEmailAndPassword, getAuth } from 'firebase/auth'
 import { Link, useNavigate } from 'react-router-dom'
 import LoadingContext from '../contexts/loading/loadingContext'
+import logoImg from '../assets/images/logo.png'
 import {
   FormControl,
   FormLabel,
@@ -41,6 +42,7 @@ export default function SignIn() {
       const userCredentials = await signInWithEmailAndPassword(auth, email, password)
       const user = userCredentials.user
       if (user) {
+        dispatch({ type: 'STOP_LOADING' })
         nav('/explore')
       }
 
@@ -90,7 +92,7 @@ export default function SignIn() {
               <div>
                 <img
                   className="mx-auto h-12 w-auto"
-                  src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
+                  src={logoImg}
                   alt="Workflow"
                 />
                 <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign in</h2>

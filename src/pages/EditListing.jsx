@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useContext } from 'react'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
-import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { getStorage, ref, uploadBytesResumable, getDownloadURL, list } from "firebase/storage";
 import { addDoc, collection, serverTimestamp, updateDoc, doc, getDoc } from 'firebase/firestore'
 import { db } from '../firebase.config';
 import { useNavigate, useParams } from 'react-router-dom'
@@ -109,20 +109,6 @@ const EditListing = () => {
 
   }, [isMounted])
   
-//   useEffect(() => {
-//     if(listing && listing.userRef !== auth.currentUser.uid) {
-//         toast({
-//             title: 'Error',
-//             description: "You can't edit this ad!",
-//             position: 'top',
-//             status: 'error',
-//             duration: 3000,
-//             isClosable: true,
-//           })
-//     }
-//     navigate('/')
-//   })
-
 
   useEffect(() => {
     const fetchUserListing = async () => {
@@ -169,74 +155,78 @@ const EditListing = () => {
     
     e.preventDefault()
     dispatch({ type: 'START_LOADING' })
+    
+
+
     try {
-      const storeImage = async (img) => {
-
-        return new Promise((resolve, reject) => {
-            const storage = getStorage()
-            const fileName = `${auth.currentUser.uid}-${img.name}-${uuidv4()}`
-    
-            const storageRef = ref(storage, 'images/' + fileName)
-            console.log('this is storageRef ', storageRef)
-            // Upload file and metadata to the object 'images/mountains.jpg'
-            const uploadTask = uploadBytesResumable(storageRef, img);
-    
-            // Listen for state changes, errors, and completion of the upload.
-            uploadTask.on('state_changed',
-            (snapshot) => {
-              // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-              const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-              console.log('Upload is ' + progress + '% done');
-              switch (snapshot.state) {
-                case 'paused':
-                  console.log('Upload is paused');
-                  break;
-                case 'running':
-                  console.log('Upload is running');
-                  break;
-              }
-            }, 
-            (error) => {
-              reject(error)
-              // A full list of error codes is available at
-              // https://firebase.google.com/docs/storage/web/handle-errors
-              switch (error.code) {
-                case 'storage/unauthorized':
-                  // User doesn't have permission to access the object
-                  break;
-                case 'storage/canceled':
-                  // User canceled the upload
-                  break;
-    
-                // ...
-    
-                case 'storage/unknown':
-                  // Unknown error occurred, inspect error.serverResponse
-                  break;
-              }
-            }, 
-            () => {
-              // Upload completed successfully, now we can get the download URL
-              getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                resolve(downloadURL);
-              });
-            }
-            );
-          })
-        }
-
-      const carImages = await Promise.all(
-          [...formData.images].map(img => storeImage(img))
-      ).catch((error) => {
-          alert(error)
-          return
-      })
       
-      const formDataCopy = {
+      if(formData.images !== listing.images) {
+        const storeImage = async (img) => {
+  
+          return new Promise((resolve, reject) => {
+              const storage = getStorage()
+              const fileName = `${auth.currentUser.uid}-${img.name}-${uuidv4()}`
+      
+              const storageRef = ref(storage, 'images/' + fileName)
+              console.log('this is storageRef ', storageRef)
+              // Upload file and metadata to the object 'images/mountains.jpg'
+              const uploadTask = uploadBytesResumable(storageRef, img);
+      
+              // Listen for state changes, errors, and completion of the upload.
+              uploadTask.on('state_changed',
+              (snapshot) => {
+                // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                console.log('Upload is ' + progress + '% done');
+                switch (snapshot.state) {
+                  case 'paused':
+                    console.log('Upload is paused');
+                    break;
+                  case 'running':
+                    console.log('Upload is running');
+                    break;
+                }
+              }, 
+              (error) => {
+                reject(error)
+                // A full list of error codes is available at
+                // https://firebase.google.com/docs/storage/web/handle-errors
+                switch (error.code) {
+                  case 'storage/unauthorized':
+                    // User doesn't have permission to access the object
+                    break;
+                  case 'storage/canceled':
+                    // User canceled the upload
+                    break;
+      
+                  // ...
+      
+                  case 'storage/unknown':
+                    // Unknown error occurred, inspect error.serverResponse
+                    break;
+                }
+              }, 
+              () => {
+                // Upload completed successfully, now we can get the download URL
+                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                  resolve(downloadURL);
+                });
+              }
+              );
+            })
+          }
+  
+        const carImages = await Promise.all(
+            [...formData.images].map(img => storeImage(img))
+        ).catch((error) => {
+            alert(error)
+            return
+        })
+        const formDataCopy = {
           ...formData,
           carImages,
           timpestamp: serverTimestamp()
-      }
+        }
       delete formDataCopy.images
 
       const docRef = doc(db, 'cars', params.listingId)
@@ -245,7 +235,7 @@ const EditListing = () => {
       dispatch({ type: 'STOP_LOADING' })
       toast({
         title: 'Success',
-        description: "Your advertisement has been added successfully",
+        description: "Your advertisement has been edited successfully",
         position: 'top',
         status: 'success',
         duration: 3000,
@@ -253,6 +243,29 @@ const EditListing = () => {
       })
       navigate(`/category/${formDataCopy.type}/${docRef.id}`)
 
+      } else {
+        const formDataCopy = {
+          ...formData,
+          timpestamp: serverTimestamp(),
+        }
+        delete formDataCopy.images
+
+        const docRef = doc(db, 'cars', params.listingId)
+        await updateDoc(docRef, formDataCopy)
+
+        dispatch({ type: 'STOP_LOADING' })
+        toast({
+          title: 'Success',
+          description: "Your advertisement has been edited successfully",
+          position: 'top',
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+        })
+        navigate(`/category/${formDataCopy.type}/${docRef.id}`)
+      }
+
+      
     } catch (error) {
       console.log(error.code)
       dispatch({ type: 'STOP_LOADING' })
@@ -513,7 +526,7 @@ const EditListing = () => {
         <Button 
           variant='outline'
           isLoading={buttonLoading}
-          loadingText='Adding ..' 
+          loadingText='Editting ..' 
           type='submit' 
           colorScheme='teal' 
           size='lg'

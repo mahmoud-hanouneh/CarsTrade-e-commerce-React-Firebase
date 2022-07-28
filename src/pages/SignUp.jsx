@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import logoImg from '../assets/images/logo.png'
+
 import {
   FormControl,
   FormLabel,
@@ -97,7 +99,7 @@ const SignUp = () => {
             <div>
               <img
                 className="mx-auto h-12 w-auto"
-                src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
+                src={logoImg}
                 alt="Workflow"
               />
               <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign Up</h2>

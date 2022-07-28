@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { getDoc, doc, collection } from 'firebase/firestore'
 import { getAuth } from 'firebase/auth'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, Link } from 'react-router-dom'
 import Spinner from '../components/feedback/Spinner'
 import { Image, Container, Box, Heading, Stack, Text, Button } from '@chakra-ui/react'
 import { ArrowForwardIcon } from '@chakra-ui/icons'
@@ -87,7 +87,7 @@ const ListingDetails = () => {
                 </Text>
               }
         </Stack>
-        {auth.currentUser.uid === carListing.userRef && 
+        {auth.currentUser?.uid !== carListing.userRef && 
           <Link to={`/contact/${carListing.userRef}?listingName=${carListing.modelName}`}>
            <Button
             className='my-4'

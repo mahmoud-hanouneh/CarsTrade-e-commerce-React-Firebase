@@ -2,6 +2,7 @@ import { useState, useContext } from 'react'
 import { getAuth, sendPasswordResetEmail } from 'firebase/auth'
 import { useToast, FormControl, FormLabel, Input, Button } from '@chakra-ui/react'
 import LoadingContext from '../contexts/loading/loadingContext'
+import logoImg from '../assets/images/logo.png'
 
 const ForgotPassword = () => {
    
@@ -49,10 +50,10 @@ const ForgotPassword = () => {
           <div>
             <img
               className="mx-auto h-12 w-auto"
-              src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
+              src={logoImg}
               alt="Workflow"
             />
-            <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign in</h2>
+            <h2 className="mt-6 mb-10 text-center text-3xl font-extrabold text-gray-900">Forgot Password</h2>
             
             <form onSubmit={submitHandler}>
               <FormControl>
