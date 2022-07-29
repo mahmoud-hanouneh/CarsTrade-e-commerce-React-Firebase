@@ -5,7 +5,7 @@ import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
 import { db } from '../firebase.config';
 import { useNavigate } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid'
-import LoadingContext from '../contexts/loading/loadingContext'
+import LoadingContext from '../contexts/loading/LoadingContext'
 
 import Spinner from '../components/feedback/Spinner'
 
