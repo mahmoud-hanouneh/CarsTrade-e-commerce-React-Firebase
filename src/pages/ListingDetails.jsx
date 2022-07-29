@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react'
-import { getDoc, doc, collection } from 'firebase/firestore'
+import { getDoc, doc } from 'firebase/firestore'
 import { getAuth } from 'firebase/auth'
 import { useNavigate, useParams, Link } from 'react-router-dom'
 import Spinner from '../components/feedback/Spinner'
-import { Image, Container, Box, Heading, Stack, Text, Button } from '@chakra-ui/react'
+import { Image, Container, Box, Heading, Stack, Text, Button, Divider, List, ListItem, ListIcon } from '@chakra-ui/react'
 import { ArrowForwardIcon } from '@chakra-ui/icons'
-
+import { AiFillCheckCircle } from 'react-icons/ai'
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
@@ -68,26 +68,78 @@ const ListingDetails = () => {
           ))}
      </Swiper>
      <Box className='p-2'>
-        <Heading className='mb-2' as='h2' size='xl'>
+
+        <Heading pl={4} className='mb-2' as='h2' size='xl'>
           {carListing.manufacturer}
-        </Heading>       
-        <Stack>
-              <Text fontSize='md'>Color: {carListing.color}</Text>
-              <Text fontSize='md'>Year: {carListing.modelYear}</Text>
-              <Text fontSize='md'>Transmission: {carListing.transmission}</Text>
-              <Text fontSize='md'>Mileage: {carListing.mileage} {' '} Km</Text>
-              <Text fontSize='md'>
+        </Heading>   
+        <Heading pl={4} className='mb-2' as='h4' size='md'>
+          {carListing.modelName}
+        </Heading>
+
+        <List p={4} spacing={3}>
+              <ListItem>
+                <ListIcon as={AiFillCheckCircle} color='orange.500' />
+                Color: {carListing.color}
+                <Divider variant='solid' />
+              </ListItem>
+
+              <ListItem>
+                <ListIcon as={AiFillCheckCircle} color='orange.500' />
+                Year: {carListing.modelYear}
+                <Divider variant='solid' />
+              </ListItem>
+
+              <ListItem>
+                <ListIcon as={AiFillCheckCircle} color='orange.500' />
+                Transmission: {carListing.transmission}
+                <Divider variant='solid' />
+              </ListItem>
+
+              <ListItem>
+                <ListIcon as={AiFillCheckCircle} color='orange.500' />
+                Mileage: {carListing.mileage} {' '} Km
+                <Divider variant='solid' />
+              </ListItem>
+
+              <ListItem as={carListing.offer && 's'}>
+                <ListIcon as={AiFillCheckCircle} color='orange.500' />
                 {carListing.type === 'sale' ? 'Price:' : 'Rent:'}
                 { ' ' } {carListing.price} $ { ' ' }
                 {carListing.type === 'rent' && '/Month'} 
-              </Text>
+                <Divider variant='solid' />
+              </ListItem>
+              
               {carListing.notes !== '' && 
-                <Text fontSize='md'>
+                <ListItem>
+                  <ListIcon as={AiFillCheckCircle} color='orange.500' />
                   Note: {carListing.notes}
-                </Text>
+                  <Divider variant='solid' />
+                </ListItem>
               }
-        </Stack>
-        {auth.currentUser?.uid !== carListing.userRef && 
+
+              {carListing.offer && (
+                <ListItem>
+                  <ListIcon as={AiFillCheckCircle} color='orange.500' />
+                  Discounted Price: { ' ' } {carListing.discountedPrice} { ' ' } $
+                  <Divider variant='solid' />
+                </ListItem>
+              )}
+             
+             <ListItem>
+                  <ListIcon as={AiFillCheckCircle} color='orange.500' />
+                  City: {carListing.city}
+                  <Divider variant='solid' />
+             </ListItem>
+
+              <ListItem>
+                    <ListIcon as={AiFillCheckCircle} color='orange.500' />
+                    Location: {carListing.location}
+                    <Divider variant='solid' />
+              </ListItem>
+
+        </List>
+
+          {auth.currentUser?.uid !== carListing.userRef && 
           <Link to={`/contact/${carListing.userRef}?listingName=${carListing.modelName}`}>
            <Button
             className='my-4'

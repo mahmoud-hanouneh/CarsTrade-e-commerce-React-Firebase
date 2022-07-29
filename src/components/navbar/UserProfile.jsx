@@ -1,6 +1,6 @@
-import {useEffect, useState} from 'react'
+import {useEffect, useRef, useState} from 'react'
 import {
-    IconButton, Avatar, Box, Flex, HStack, VStack, Text, Menu, MenuButton, MenuDivider,
+    Avatar, Box, Flex, HStack, VStack, Text, Menu, MenuButton, MenuDivider,
     MenuItem, MenuList,
 } from "@chakra-ui/react";
 
@@ -11,16 +11,25 @@ import { useNavigate } from 'react-router-dom';
 const UserProfile = () => {
   const auth = getAuth()
   const nav = useNavigate()
-  const [displayName, setDisplayName] = useState(null)
+  const [displayName, setDisplayName] = useState(' ')
+  const mounted = useRef(true)
 
   useEffect(() => {
     
-    onAuthStateChanged(auth, (user) => {
-      if(user) {
-        setDisplayName(auth.currentUser.displayName)
-      }
-  })
-  },[])
+    if(mounted) {
+      onAuthStateChanged(auth, (user) => {
+        if(user) {
+          setDisplayName(auth.currentUser.displayName)
+        }
+      })
+    }
+   
+  return () => {
+    mounted.current = false
+  }
+
+  },[mounted])
+
   const signOutHandler = () => {
     auth.signOut()
     nav('/sign-in')
@@ -38,6 +47,7 @@ const UserProfile = () => {
                 <HStack spacing="4">
                   <Avatar
                     size="md"
+                    name={displayName}
                   />
                   <VStack
                     display={{ base: "none", md: "flex" }}

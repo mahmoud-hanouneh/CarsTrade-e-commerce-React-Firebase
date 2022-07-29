@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { Stack, Box, Button, HStack, VStack, Avatar } from '@chakra-ui/react'
+import { Stack, Box, Button } from '@chakra-ui/react'
 import MenuItem from './MenuItem'
 import { AiOutlineAppstoreAdd } from 'react-icons/ai'
 import UserProfile from './UserProfile'
-import useAuthentication from '../../hooks/useAuthentication'
-import { useNavigate } from 'react-router-dom'
 import { onAuthStateChanged, getAuth } from 'firebase/auth' 
 
 const MenuLinks = ({ isOpen }) => {
 
   const [loginState, setLoginState] = useState(true)
-  const navigate = useNavigate()
   
   useEffect(() => {
     
@@ -23,8 +20,7 @@ const MenuLinks = ({ isOpen }) => {
       }
     })
   }, [])
-  console.log(loginState)
-  
+
   return (
     <Box
         display={{ base: isOpen ? "block" : "none", md: "block" }}

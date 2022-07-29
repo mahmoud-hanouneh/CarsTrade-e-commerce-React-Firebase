@@ -1,5 +1,5 @@
-import { useState, useContext } from 'react'
-import { signInWithEmailAndPassword, getAuth } from 'firebase/auth'
+import { useState, useContext, useEffect, useRef } from 'react'
+import { signInWithEmailAndPassword, getAuth, onAuthStateChanged } from 'firebase/auth'
 import { Link, useNavigate } from 'react-router-dom'
 import LoadingContext from '../contexts/loading/LoadingContext'
 import LogoImg from '../images/logo.png'
@@ -26,7 +26,23 @@ export default function SignIn() {
 
   const nav = useNavigate()
   const toast = useToast()
-  
+  const auth = getAuth()
+  const isMounted = useRef(true)
+
+  useEffect(() => {
+    if (isMounted) {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+              nav('/')
+            }
+        })
+    }
+
+    return () => {
+        isMounted.current = false
+    }
+
+  }, [isMounted])
 
   const changeHandler = (e) => {
     setFormData(prev => ({

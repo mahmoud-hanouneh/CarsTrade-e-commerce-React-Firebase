@@ -96,16 +96,16 @@ const ListingItem = ( { data, id, deleteListing, editListing } ) => {
             {data.offer && <Text className='text-orange-500	font-bold	'>{data.discountedPrice} $</Text>}
           </Box>
 
-          <Stack direction={['row', 'row']} spacing='8px'>
+          <Stack direction={['column', 'column']}>
             <Link to={`/category/${data.type}/${id}`}>
-              <Button colorScheme='orange' className='mt-3'>
+              <button className='mt-3 btn-grad mx-1 font-medium'>
                 View Details
-              </Button>
+              </button>
             </Link>
             
             {editListing && (
               <Link to={`/edit-listing/${id}`}>
-                <Button colorScheme='orange' variant='outline' className='mt-3 mx-1'>
+                <Button style={{width: '150px'}} colorScheme='orange' variant='outline' className='mt-2 mx-1'>
                 Edit
                 </Button>
               </Link>
