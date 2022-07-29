@@ -15,7 +15,7 @@ import ListingDetails from './pages/ListingDetails';
 import PrivateRoute from './components/PrivateRoute';
 import Header from './components/navbar/Header'
 
-import { LoadingProvider } from './contexts/loading/loadingContext';
+import { LoadingProvider } from './contexts/loading/LoadingContext';
 
 function App() {
   return (
