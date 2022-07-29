@@ -2,7 +2,7 @@ import { useState, useContext } from 'react'
 import { getAuth, sendPasswordResetEmail } from 'firebase/auth'
 import { useToast, FormControl, FormLabel, Input, Button } from '@chakra-ui/react'
 import LoadingContext from '../contexts/loading/LoadingContext'
-import logoImg from '../assets/images/logo.png'
+import logoImg from '../images/logo.png'
 
 const ForgotPassword = () => {
    

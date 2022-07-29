@@ -2,7 +2,7 @@ import { useState, useContext } from 'react'
 import { signInWithEmailAndPassword, getAuth } from 'firebase/auth'
 import { Link, useNavigate } from 'react-router-dom'
 import LoadingContext from '../contexts/loading/LoadingContext'
-import LogoImg from '../assets/images/logo.png'
+import LogoImg from '../images/logo.png'
 import {
   FormControl,
   FormLabel,

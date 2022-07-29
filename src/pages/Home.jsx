@@ -1,10 +1,9 @@
 import React from 'react'
 import { Box, Image, Button, Stack } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
-// import saleImg from '../assets/images/sale.jpg'
-// import rentImg from '../assets/images/rent.jpg'
-import forRentImg from '../assets/images/for-rent.png'
-import forSaleImg from '../assets/images/for-sale.png'
+
+import forRentImg from '../images/for-rent.png'
+import forSaleImg from '../images/for-sale.png'
 
 const Home = () => {
  
