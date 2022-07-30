@@ -14,6 +14,7 @@ import EditListing from './pages/EditListing';
 import ListingDetails from './pages/ListingDetails';
 import PrivateRoute from './components/PrivateRoute';
 import Header from './components/navbar/Header'
+import Footer from './components/Footer';
 
 import { LoadingProvider } from './contexts/loading/LoadingContext';
 
@@ -40,6 +41,7 @@ function App() {
               <Route path='/contact/:carOwnerId' element={<Contact />} />
             </Route>
           </Routes>
+          <Footer />
         </Router>
       </LoadingProvider>
   );

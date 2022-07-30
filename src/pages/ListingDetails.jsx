@@ -3,7 +3,7 @@ import { getDoc, doc } from 'firebase/firestore'
 import { getAuth } from 'firebase/auth'
 import { useNavigate, useParams, Link } from 'react-router-dom'
 import Spinner from '../components/feedback/Spinner'
-import { Image, Container, Box, Heading, Stack, Text, Button, Divider, List, ListItem, ListIcon } from '@chakra-ui/react'
+import { Image, Container, Box, Heading, Button, Divider, List, ListItem, ListIcon } from '@chakra-ui/react'
 import { ArrowForwardIcon } from '@chakra-ui/icons'
 import { AiFillCheckCircle } from 'react-icons/ai'
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
@@ -79,31 +79,31 @@ const ListingDetails = () => {
         <List p={4} spacing={3}>
               <ListItem>
                 <ListIcon as={AiFillCheckCircle} color='orange.500' />
-                Color: {carListing.color}
+                Color: &emsp; {carListing.color}
                 <Divider variant='solid' />
               </ListItem>
 
               <ListItem>
                 <ListIcon as={AiFillCheckCircle} color='orange.500' />
-                Year: {carListing.modelYear}
+                Year:  &emsp; {carListing.modelYear}
                 <Divider variant='solid' />
               </ListItem>
 
               <ListItem>
                 <ListIcon as={AiFillCheckCircle} color='orange.500' />
-                Transmission: {carListing.transmission}
+                Transmission:  &emsp; {carListing.transmission}
                 <Divider variant='solid' />
               </ListItem>
 
               <ListItem>
                 <ListIcon as={AiFillCheckCircle} color='orange.500' />
-                Mileage: {carListing.mileage} {' '} Km
+                Mileage: &emsp; {carListing.mileage} {' '} Km
                 <Divider variant='solid' />
               </ListItem>
 
               <ListItem as={carListing.offer && 's'}>
                 <ListIcon as={AiFillCheckCircle} color='orange.500' />
-                {carListing.type === 'sale' ? 'Price:' : 'Rent:'}
+                {carListing.type === 'sale' ? 'Price:' : 'Rent:'}  &emsp;
                 { ' ' } {carListing.price} $ { ' ' }
                 {carListing.type === 'rent' && '/Month'} 
                 <Divider variant='solid' />
@@ -112,7 +112,7 @@ const ListingDetails = () => {
               {carListing.notes !== '' && 
                 <ListItem>
                   <ListIcon as={AiFillCheckCircle} color='orange.500' />
-                  Note: {carListing.notes}
+                  Note:  &emsp; {carListing.notes} 
                   <Divider variant='solid' />
                 </ListItem>
               }
@@ -120,20 +120,20 @@ const ListingDetails = () => {
               {carListing.offer && (
                 <ListItem>
                   <ListIcon as={AiFillCheckCircle} color='orange.500' />
-                  Discounted Price: { ' ' } {carListing.discountedPrice} { ' ' } $
+                  Discounted Price: { ' ' }  &emsp; {carListing.discountedPrice} { ' ' } $
                   <Divider variant='solid' />
                 </ListItem>
               )}
              
              <ListItem>
                   <ListIcon as={AiFillCheckCircle} color='orange.500' />
-                  City: {carListing.city}
+                  City:  &emsp; {carListing.city}
                   <Divider variant='solid' />
              </ListItem>
 
               <ListItem>
                     <ListIcon as={AiFillCheckCircle} color='orange.500' />
-                    Location: {carListing.location}
+                    Location:  &emsp; {carListing.location}
                     <Divider variant='solid' />
               </ListItem>
 
