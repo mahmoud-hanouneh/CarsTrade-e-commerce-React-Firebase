@@ -1,10 +1,13 @@
 import { Link } from 'react-router-dom'
 import { Button, Heading, Text, Flex, Box, Image, Stack, Badge } from '@chakra-ui/react'
+// icons
 import { ImLocation } from 'react-icons/im' 
 import { FaBluetooth, FaCarCrash } from 'react-icons/fa'
 import { GiCarSeat } from 'react-icons/gi'
 import { AiTwotoneDelete } from 'react-icons/ai'
+import { EditIcon } from '@chakra-ui/icons'
 
+import styles from './ListingItem.css'
 
 const ListingItem = ( { data, id, deleteListing, editListing } ) => {
 
@@ -98,15 +101,15 @@ const ListingItem = ( { data, id, deleteListing, editListing } ) => {
 
           <Stack direction={['column', 'column']}>
             <Link to={`/category/${data.type}/${id}`}>
-              <button className='mt-3 btn-grad mx-1 font-medium'>
+              <button className='btnGrad mt-3 mx-1 font-medium'>
                 View Details
               </button>
             </Link>
             
             {editListing && (
               <Link to={`/edit-listing/${id}`}>
-                <Button style={{width: '150px'}} colorScheme='orange' variant='outline' className='mt-2 mx-1'>
-                Edit
+                <Button leftIcon={<EditIcon />} style={{width: '150px'}} colorScheme='orange' variant='outline' className='mt-2 mx-1'>
+                 Edit 
                 </Button>
               </Link>
             )}

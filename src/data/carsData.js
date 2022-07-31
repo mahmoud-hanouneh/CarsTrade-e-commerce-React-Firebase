@@ -35,5 +35,25 @@ export const carsData = [
         id: '9',
         manufacturer: 'Mercedes',
     },
+    {
+        id: '10',
+        manufacturer: 'Nissan',
+    },
+    {
+        id: '11',
+        manufacturer: 'Isuzu',
+    },
+    {
+        id: '12',
+        manufacturer: 'Wolks Wagen',
+    },
+    {
+        id: '13',
+        manufacturer: 'Saba',
+    },
+    {
+        id: '14',
+        manufacturer: 'Sham',
+    },
 ]
     
