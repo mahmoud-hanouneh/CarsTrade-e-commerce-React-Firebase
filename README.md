@@ -88,7 +88,7 @@ Follow these two simple steps to get CarsTrade up and running locally on you com
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/your_username_/Project-Name.git
+   git clone https://github.com/mahmoud-hanouneh/E-commerce-React-Firebase
    ```
 2. Install NPM packages
    ```sh
@@ -102,9 +102,9 @@ Follow these two simple steps to get CarsTrade up and running locally on you com
 <!-- CONTACT -->
 ## Contact
 
-Mahmoud Hanouneh - [@LinkedIn](https://linkedin.com/in/mahmoud-hanouneh) - mahmoud-hanouneh
-
-Project Link: [https://github.com/mahmoud-hanouneh/E-commerce-React-Firebase](https://github.com/mahmoud-hanouneh/E-commerce-React-Firebase)
+Mahmoud Hanouneh - [LinkedIn](https://linkedin.com/in/mahmoud-hanouneh)
+Email: [mahmoudhanouneh@gmail.com]
+Project Link: [GitHub](https://github.com/mahmoud-hanouneh/E-commerce-React-Firebase)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
