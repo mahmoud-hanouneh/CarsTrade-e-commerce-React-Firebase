@@ -5,7 +5,7 @@
 <br />
 <div align="center">
   <a href="https://e-commerce-react-firebase.vercel.app">
-    <img src="src/images/logo.png" alt="Logo" width="80" height="80">
+    <img src="src/images/logo.png" alt="Logo">
   </a>
 
   <h3 align="center">CarsTrade</h3>
@@ -133,7 +133,8 @@ Usefull resources that have been used during building the project.
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
 [React-url]: https://reactjs.org/
 [Tailwind.css]: https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white
-[Tailwind.url]: https://tailwindcss.com/
+[Tailwind-url]: https://tailwindcss.com/
 [Firebase_]: https://img.shields.io/badge/firebase-%23039BE5.svg?style=for-the-badge&logo=firebase
 [Firebase-url]: https://firebase.google.com/
-[Chakra-url]: https://img.shields.io/badge/chakra-%234ED1C5.svg?style=for-the-badge&logo=chakraui&logoColor=white
+[Chakra_UI]: https://img.shields.io/badge/chakra-%234ED1C5.svg?style=for-the-badge&logo=chakraui&logoColor=white
+[Chakra-url]: https://chakra-ui.com/
