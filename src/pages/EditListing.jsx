@@ -331,7 +331,6 @@ const EditListing = () => {
             <Stack spacing={5} direction='row'>
               <Radio colorScheme='teal' value='sale'>Sale</Radio>
               <Radio colorScheme='teal' value='rent'>Rent</Radio>
-              <Radio colorScheme='teal' value='lease'>Lease</Radio>
             </Stack>
           </RadioGroup> 
         </FormControl>

@@ -7,6 +7,7 @@ import { GiCarSeat } from 'react-icons/gi'
 import { AiTwotoneDelete } from 'react-icons/ai'
 import { EditIcon } from '@chakra-ui/icons'
 
+import moment from 'moment'
 import styles from './ListingItem.css'
 
 const ListingItem = ( { data, id, deleteListing, editListing } ) => {
@@ -17,7 +18,7 @@ const ListingItem = ( { data, id, deleteListing, editListing } ) => {
           <Image borderRadius={20} className='w-fit max-h-min absolute' src={data.carImages[0]} alt="" />
          {data.offer && <Badge colorScheme='red' className='absolute right-0'>offer</Badge>}
       </div>
-      <div className="basis-1/2">
+      <div className="basis-1/2 relative">
           <Heading className='mb-3' as='h4' size='lg'>
             {data.manufacturer}
           </Heading>
@@ -85,6 +86,7 @@ const ListingItem = ( { data, id, deleteListing, editListing } ) => {
             { ' ' }
             {data.modelYear > 2019 && <span className='font-bold text-red-600	text-sm'>New!</span>}   
           </Text>
+          <Badge className='absolute top-0 right-0' colorScheme='green'>{moment(data.timpestamp.toDate()).fromNow()}</Badge>
           <hr />
       </div>
 

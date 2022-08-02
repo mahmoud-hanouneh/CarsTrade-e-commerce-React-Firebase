@@ -1,21 +1,28 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useReducer } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import userReducer from './UserReducer'
 const UserContext = createContext()
 
 export const UserProvider = ( { children } ) => {
 
-    const [isLoggedIn, setIsLoggedIn] = useState()
+    const userState = {
+        isLogged: false,
+        name: ''
+    }
+    const [state, dispatch] = useReducer(userReducer, userState)
+
     const auth = getAuth()
 
     onAuthStateChanged(auth, (user) => {
         if (user) {
-            setIsLoggedIn(true)
+            dispatch( { type: 'SET_USER' } )
         } else {
-            setIsLoggedIn(false)
+            dispatch( { type: 'DROP_USER' } )
         }
     })
     return <UserContext.Provider value={{
-        isLoggedIn
+        state,
+        dispatch
     }}>
         {children}
     </UserContext.Provider>
