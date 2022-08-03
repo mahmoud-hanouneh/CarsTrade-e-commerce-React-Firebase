@@ -22,8 +22,8 @@ import { LoadingProvider } from './contexts/loading/LoadingContext';
 
 function App() {
   return (
+    <UserProvider>
       <LoadingProvider>
-        <UserProvider>
           <Router>
             <Header />
             <Routes>
@@ -47,8 +47,8 @@ function App() {
             
             <Footer />
           </Router>
-        </UserProvider>
       </LoadingProvider>
+      </UserProvider>
   );
 }
 

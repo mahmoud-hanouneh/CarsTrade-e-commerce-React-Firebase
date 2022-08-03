@@ -40,7 +40,7 @@ const Profile = () => {
   const [listings, setListings] = useState(null)
 
   const { spinnerLoading, buttonLoading, dispatch } = useContext(LoadingContext)
-  const { dispatch: dispatchUser } = useContext(UserContext)
+  const { setUserState } = useContext(UserContext)
 
 
   useEffect(() => {
@@ -93,7 +93,7 @@ const Profile = () => {
         isClosable: true,
       })
       dispatch({ type: 'STOP_LOADING' })
-      dispatchUser({ type: 'SET_USER', payload: name})
+      setUserState({ type: 'SET_USER', payload: name})
 
     } catch (error) {
       console.log(error.code)
