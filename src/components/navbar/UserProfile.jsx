@@ -1,4 +1,4 @@
-import React, {useEffect, useContext, useState} from 'react'
+import React, {useEffect, useContext } from 'react'
 import UserContext from '../../contexts/user/UserContext';
 import {
     Avatar, Box, Flex, HStack, VStack, Text, Menu, MenuButton, MenuDivider,
@@ -13,12 +13,12 @@ const UserProfile = () => {
   const auth = getAuth()
   const nav = useNavigate()
 
-  const { displayName, setUserState } = useContext(UserContext)
+  const { displayName, dispatch } = useContext(UserContext)
   useEffect(() => {
     
       onAuthStateChanged(auth, (user) => {
         if(user) {
-          setUserState({ type: 'SET_USER', payload: user.displayName })
+          dispatch({ type: 'SET_USER', payload: user.displayName })
         }
       })
     

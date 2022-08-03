@@ -40,7 +40,7 @@ const Profile = () => {
   const [listings, setListings] = useState(null)
 
   const { spinnerLoading, buttonLoading, dispatch } = useContext(LoadingContext)
-  const { setUserState } = useContext(UserContext)
+  const { dispatch: setUserState } = useContext(UserContext)
 
 
   useEffect(() => {

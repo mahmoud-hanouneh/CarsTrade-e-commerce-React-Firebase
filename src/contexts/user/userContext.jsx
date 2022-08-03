@@ -8,11 +8,11 @@ export const UserProvider = ( { children } ) => {
         isLogged: false,
         displayName: ' '
     }
-    const [state, setUserState] = useReducer(userReducer, userState)
+    const [state, dispatch] = useReducer(userReducer, userState)
 
     return <UserContext.Provider value={{
         ...state,
-        setUserState
+        dispatch
     }}>
         {children}
     </UserContext.Provider>

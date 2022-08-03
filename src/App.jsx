@@ -16,14 +16,13 @@ import PrivateRoute from './components/PrivateRoute';
 import Header from './components/navbar/Header'
 import Footer from './components/Footer';
 
-import { UserProvider } from './contexts/user/UserContext';
 import { LoadingProvider } from './contexts/loading/LoadingContext';
-
+import { UserProvider } from './contexts/user/UserContext';
 
 function App() {
   return (
-    <UserProvider>
-      <LoadingProvider>
+    <LoadingProvider>
+      <UserProvider>
           <Router>
             <Header />
             <Routes>
@@ -44,11 +43,10 @@ function App() {
                 <Route path='/contact/:carOwnerId' element={<Contact />} />
               </Route>
             </Routes>
-            
             <Footer />
           </Router>
-      </LoadingProvider>
       </UserProvider>
+    </LoadingProvider>
   );
 }
 
