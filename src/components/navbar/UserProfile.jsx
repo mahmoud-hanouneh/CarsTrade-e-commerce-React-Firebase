@@ -1,4 +1,5 @@
-import {useEffect, useRef, useState} from 'react'
+import React, {useEffect, useContext} from 'react'
+import UserContext from '../../contexts/user/UserContext';
 import {
     Avatar, Box, Flex, HStack, VStack, Text, Menu, MenuButton, MenuDivider,
     MenuItem, MenuList,
@@ -11,24 +12,18 @@ import { useNavigate } from 'react-router-dom';
 const UserProfile = () => {
   const auth = getAuth()
   const nav = useNavigate()
-  const [displayName, setDisplayName] = useState(' ')
-  const mounted = useRef(true)
+
+  const { displayName, dispatch } = useContext(UserContext)
 
   useEffect(() => {
     
-    if(mounted) {
       onAuthStateChanged(auth, (user) => {
         if(user) {
-          setDisplayName(auth.currentUser.displayName)
+          dispatch({ type: 'SET_USER', payload: user.displayName })
         }
       })
-    }
-   
-  return () => {
-    mounted.current = false
-  }
-
-  },[mounted])
+    
+  },[])
 
   const signOutHandler = () => {
     auth.signOut()

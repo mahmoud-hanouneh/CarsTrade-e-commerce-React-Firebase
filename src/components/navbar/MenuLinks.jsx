@@ -5,12 +5,12 @@ import { AiOutlineAppstoreAdd } from 'react-icons/ai'
 import UserProfile from './UserProfile'
 import { onAuthStateChanged, getAuth } from 'firebase/auth' 
 
-const MenuLinks = ({ isOpen }) => {
 
-  const [loginState, setLoginState] = useState(true)
+const MenuLinks = ({ isOpen }) => {
   
+  const [loginState, setLoginState] = useState(true)
+
   useEffect(() => {
-    
     const auth = getAuth()
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -57,7 +57,7 @@ const MenuLinks = ({ isOpen }) => {
         }
 
 
-        {loginState && <UserProfile />}
+        {loginState && (<UserProfile />)}
         
       </Stack>
     </Box>

@@ -17,10 +17,12 @@ import Header from './components/navbar/Header'
 import Footer from './components/Footer';
 
 import { LoadingProvider } from './contexts/loading/LoadingContext';
+import { UserProvider } from './contexts/user/UserContext';
 
 function App() {
   return (
       <LoadingProvider>
+        <UserProvider>
         <Router>
           <Header />
           <Routes>
@@ -41,8 +43,10 @@ function App() {
               <Route path='/contact/:carOwnerId' element={<Contact />} />
             </Route>
           </Routes>
+          
           <Footer />
         </Router>
+        </UserProvider>
       </LoadingProvider>
   );
 }

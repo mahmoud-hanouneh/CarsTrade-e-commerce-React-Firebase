@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import LogoImg from '../images/logo.png'
 
 import {
@@ -19,6 +19,8 @@ import { db } from '../firebase.config'
 // react-router-dom
 import { Link, useNavigate } from 'react-router-dom'
 
+//user context
+import UserContext from '../contexts/user/UserContext'
 const SignUp = () => {
 
   const [showPassword, setShowPassword] = useState(false)
@@ -30,6 +32,8 @@ const SignUp = () => {
     password: ''
   })
   const { fullName, email, password } = formData
+
+  const { dispatch } = useContext(UserContext)
 
   const navigate = useNavigate()
   const toast = useToast()
@@ -62,6 +66,7 @@ const SignUp = () => {
       formDataCopy.timestamp = serverTimestamp()
 
       await setDoc(doc(db, 'users', user.uid), formDataCopy)
+      dispatch({ type: 'SET_USER', payload: auth.currentUser.displayName})
       navigate('/')
 
     } catch (error) {

@@ -5,7 +5,6 @@ import Logo from './Logo'
 import MenuLinks from './MenuLinks'
 
 
-
 const Header = (props) => {
   const [isOpen, setIsOpen] = useState(false)
   const toggle = () => setIsOpen(prev => !prev)
@@ -17,7 +16,7 @@ const Header = (props) => {
             color={["white", "white", "primary.500", "primary.500"]}
           />
           <MenuToggle isOpen={isOpen} toggle={toggle} />
-          <MenuLinks isOpen={isOpen} />
+            <MenuLinks isOpen={isOpen} />
           
         </NavbarContainer>
     

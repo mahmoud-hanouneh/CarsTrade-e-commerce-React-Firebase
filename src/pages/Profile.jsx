@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import LoadingContext from '../contexts/loading/LoadingContext' 
 import ListingItem from '../components/listings/ListingItem'
 import FadeSpinner from '../components/feedback/FadeSpinner'
+import UserContext from '../contexts/user/UserContext'
 import {
   Button,
   Heading,
@@ -27,7 +28,9 @@ const Profile = () => {
   const navigate = useNavigate()
   const auth = getAuth()
   const toast = useToast()
+  
   const [isEditing, setIsEditing] = useState(false)
+
   const [formData, setFormData] = useState({
     name: auth.currentUser.displayName,
     email: auth.currentUser.email,
@@ -37,6 +40,8 @@ const Profile = () => {
   const [listings, setListings] = useState(null)
 
   const { spinnerLoading, buttonLoading, dispatch } = useContext(LoadingContext)
+  const { dispatch: dispatchUser } = useContext(UserContext)
+
 
   useEffect(() => {
 
@@ -88,6 +93,7 @@ const Profile = () => {
         isClosable: true,
       })
       dispatch({ type: 'STOP_LOADING' })
+      dispatchUser({ type: 'SET_USER', payload: name})
 
     } catch (error) {
       console.log(error.code)
