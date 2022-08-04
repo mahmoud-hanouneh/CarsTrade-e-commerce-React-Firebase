@@ -10,7 +10,9 @@ import {
   InputGroup,
   Button,
   InputRightElement,
-  useToast
+  useToast,
+  Box,
+  Text
 } from '@chakra-ui/react'
 
 
@@ -60,6 +62,14 @@ export default function SignIn() {
       if (user) {
         dispatch({ type: 'STOP_LOADING' })
         nav('/explore')
+        toast({
+          position: 'bottom-left',
+          render: () => (
+            <Box color='#ffd056' p={3} bg='orange.500'>
+              <Text color='#ffffff'>Hello {user.displayName}</Text>
+            </Box>
+          ),
+        })
       }
 
     } catch (error) {
