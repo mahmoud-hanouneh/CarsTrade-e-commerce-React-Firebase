@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ListingItem from '../components/listings/ListingItem'
 import { useParams } from 'react-router-dom'
 import { db } from '../firebase.config'
@@ -52,28 +52,30 @@ const Listings = () => {
             }
         </Heading>
         {loading ? <ScaleSpinner /> : cars && cars.length > 0 ?
-            <>
-                {cars.map(car => {
+        <>
+           {React.Children.toArray(
+            cars.map(car => {
                     return (
                         <ListingItem 
                             id={car.id}
-                            key={car.id}
                             data={car.data}
                         />
                     )
-                    })}
-            </> : <Alert status='error'
-                    variant='subtle'
-                    flexDirection='column'
-                    alignItems='center'
-                    justifyContent='center'
-                    textAlign='center'
-                    height='200px'
-                    >
+                })
+            )}
+        </> : <Alert 
+                status='error'
+                variant='subtle'
+                flexDirection='column'
+                alignItems='center'
+                justifyContent='center'                    
+                textAlign='center'
+                height='200px'
+              >
                 <AlertIcon boxSize='40px' mr={0} />
                 <AlertTitle mt={4} mb={1} fontSize='lg'>Error occured!</AlertTitle>
                 <AlertDescription maxWidth='sm'>Please consider using a VPN if you live in <span className='font-bold'>Syria</span> or other countires where Firebase services are blocked.</AlertDescription>
-            </Alert>
+              </Alert>
           
         }
        

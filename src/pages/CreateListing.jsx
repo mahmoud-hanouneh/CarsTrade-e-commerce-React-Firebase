@@ -41,6 +41,7 @@ import { colorsData } from '../data/colorsData'
 
 const CreateListing = () => {
 
+
   const [formData, setFormData] = useState({
     type: 'sale',
     manufacturer: '',
