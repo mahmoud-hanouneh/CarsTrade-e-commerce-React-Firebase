@@ -94,7 +94,14 @@ Follow these two simple steps to get CarsTrade up and running locally on you com
    ```sh
    npm install
    ```
-
+3. Run the application
+   ```sh
+   npm run dev
+   ```
+4. Open your browser and then, navigate to:
+   ```sh
+   http://localhost:3000/
+   ```
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
