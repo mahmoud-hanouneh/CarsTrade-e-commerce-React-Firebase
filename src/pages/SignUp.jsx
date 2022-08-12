@@ -8,8 +8,11 @@ import {
   InputGroup,
   Button,
   InputRightElement,
-  useToast
+  useToast,
+  Center,
+  Text
 } from '@chakra-ui/react'
+import OAuth from '../components/OAuthGoogle/OAuth'
 
 // firebase
 import { getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
@@ -156,6 +159,7 @@ const SignUp = () => {
             </Button>
              
       </form>
+      <OAuth />
       </div>
     </div>
      

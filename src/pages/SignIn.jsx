@@ -12,9 +12,10 @@ import {
   InputRightElement,
   useToast,
   Box,
-  Text
+  Text,
+  Center
 } from '@chakra-ui/react'
-
+import OAuth from '../components/OAuthGoogle/OAuth'
 
 export default function SignIn() {
   const [showPassword, setShowPassword] = useState(false) 
@@ -166,8 +167,9 @@ export default function SignIn() {
                   colorScheme='teal'>
                     Sign In
                 </Button>
-              
+               
               </form>
+             <OAuth />
         </div>
       </div>
     </>
