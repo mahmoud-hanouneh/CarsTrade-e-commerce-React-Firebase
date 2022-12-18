@@ -1,18 +1,20 @@
 import { useState, useContext } from 'react'
 import { getAuth, sendPasswordResetEmail } from 'firebase/auth'
-import { useToast, FormControl, FormLabel, Input, Button } from '@chakra-ui/react'
+import { Alert, AlertIcon, useToast, FormControl, FormLabel, Input, Button } from '@chakra-ui/react'
 import LoadingContext from '../contexts/loading/LoadingContext'
 import logoImg from '../images/logo.png'
 
 const ForgotPassword = () => {
    
   const [email, setEmail] = useState('')
+  const [emailSent, setEmailSent] = useState(false)
   const changeHandler = e => setEmail(e.target.value)
   
   const { buttonLoading, dispatch } = useContext(LoadingContext)
 
   const toast = useToast()
-  const submitHandler = async () => {
+
+  const submitHandler = async (e) => {
     e.preventDefault()
     dispatch({ type: 'START_LOADING' })
 
@@ -28,6 +30,7 @@ const ForgotPassword = () => {
         duration: 3000,
         isClosable: true,
       })
+      setEmailSent((prev) => !prev)
     } catch (error) {
       console.log(error)
       dispatch({ type: 'STOP_LOADING' })
@@ -60,6 +63,12 @@ const ForgotPassword = () => {
               <FormLabel htmlFor='email'>Email Address</FormLabel>
               <Input placeholder='Enter your email'onChange={changeHandler} value={email} id='email' type='email' placeholer='Email' />
               </FormControl>
+
+              <Alert className="my-3" status='info' hidden={!emailSent}>
+                <AlertIcon />
+                Check Your Inbox and SPAM Messages
+              </Alert>
+              
               <Button
                 className='mt-2'
                 type='submit'
@@ -69,6 +78,7 @@ const ForgotPassword = () => {
               >
               Send
               </Button>
+             
             </form>
            
           </div>

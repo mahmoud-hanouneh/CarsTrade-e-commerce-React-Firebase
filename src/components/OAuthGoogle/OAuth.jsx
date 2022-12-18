@@ -43,7 +43,7 @@ function OAuth() {
 
   return (
       <Center>
-          <Text className='mr-3'>Sign {location.pathname==='/sign-up' ? 'Up' : 'In'} With </Text> 
+          <Text className='mr-3' fontWeight="bold">{location.pathname==='/sign-up' ? 'SignUp' : 'Continue'} With </Text> 
           <FcGoogle 
             onClick={clickHandler} 
             className='cursor-pointer' 
