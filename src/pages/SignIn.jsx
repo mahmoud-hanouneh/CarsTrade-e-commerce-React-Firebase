@@ -62,7 +62,7 @@ export default function SignIn() {
       const user = userCredentials.user
       if (user) {
         dispatch({ type: 'STOP_LOADING' })
-        nav('/explore')
+        nav('/')
         toast({
           position: 'bottom-left',
           render: () => (
