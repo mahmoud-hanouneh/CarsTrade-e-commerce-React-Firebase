@@ -87,7 +87,7 @@ export default function Footer() {
             spacing={4}
             justify={{ md: 'center' }}
             align={{ md: 'center' }}>
-            <Text>© 2022 CarsTrade. All rights reserved. By { ' ' }
+            <Text>© {new Date().getFullYear()} CarsTrade. All rights reserved. By { ' ' }
               <span className='text-red-700 font-bold	'>
                 <a className='uppercase' href='https://www.linkedin.com/in/mahmoud-hanouneh'>Mahmoud Hanouneh</a>
               </span>
