@@ -75,7 +75,7 @@ To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 
-First, npm must be installed in your machine. However, you can install it by the following command from CMD Or, you can get npm installed on your machine by installing node.js runtime environment.
+First, npm must be installed in your machine. So, you can install it by the following command from CMD Or, you can get npm installed on your machine by installing node.js runtime environment.
 
 * npm
   ```sh
@@ -84,7 +84,7 @@ First, npm must be installed in your machine. However, you can install it by the
 
 ### Installation
 
-Through your CMD. follow these four simple steps to get CarsTrade up and running locally on you computer:
+Through your CMD, follow these four simple steps to get CarsTrade up and running locally on you computer:
 
 1. Clone the repo and CD to the project's directory
    ```sh
