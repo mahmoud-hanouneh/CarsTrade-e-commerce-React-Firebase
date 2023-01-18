@@ -84,9 +84,9 @@ First, npm must be installed in your machine. However, you can install it by the
 
 ### Installation
 
-Follow these two simple steps to get CarsTrade up and running locally on you computer:
+Through your CMD. follow these four simple steps to get CarsTrade up and running locally on you computer:
 
-1. Clone the repo
+1. Clone the repo and CD to the project's directory
    ```sh
    git clone https://github.com/mahmoud-hanouneh/E-commerce-React-Firebase
    ```
