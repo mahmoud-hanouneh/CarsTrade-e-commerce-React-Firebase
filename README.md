@@ -11,7 +11,7 @@
   <h3 align="center">CarsTrade</h3>
 
   <p align="center">
-    CarsTrade, an online cars trade store.
+    CarsTrade, an online cars trade shop.
     <br />
     <a href="https://e-commerce-react-firebase.vercel.app">View Demo</a>
   </p>
@@ -49,7 +49,7 @@
 [![Product Name Screen Shot][product-screenshot]](https://e-commerce-react-firebase.vercel.app)
 
 I designed and created this cars online retailing application using React.js and Firebase from A to Z.
-CarsTrade is an online cars trade application which offers you the ability to post your selling/renting car advertisment. 
+CarsTrade is an online cars trade application that let you post your selling or renting car advertisment. 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
